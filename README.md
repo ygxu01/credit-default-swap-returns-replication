@@ -51,24 +51,24 @@ pip install -r requirements.txt
 ## **Task Assignments**
 | **Category**  | **Task Description** | **Person Responsible** | **Related Files** |
 |--------------|--------------------|----------------------|----------------|
-| **Repository Setup** | Fork `jmbejara/blank_project`, create repo, add teammates | [Your Name] / [Teammate] | `README.md`, `.gitignore` |
-| | Add `.env.example` for environment variables | [Your Name] / [Teammate] | `.env.example` |
-| | Include `requirements.txt` for dependencies | [Teammate] | `requirements.txt` |
-| **LaTeX Report** | Write report, summarize findings | [Your Name] / [Teammate] | `report.tex` |
-| **Data Handling** | Clean and preprocess data | [Your Name] | `scripts/data_cleaning.py` |
-| | **Write unit tests for data cleaning** | [Teammate] | `tests/test_data_cleaning.py` |
-| **CDS Return Calculation** | Implement CDS return formula | [Teammate] | `scripts/cds_returns.py` |
-| | **Write unit tests for return calculations** | [Your Name] | `tests/test_cds_returns.py` |
-| **Replication & Updates** | Replicate paper's tables & figures | [Your Name] / [Teammate] | `scripts/replication.py` |
-| | **Write unit tests for replication accuracy** | [Teammate] | `tests/test_replication.py` |
-| | Update analysis with recent data | [Teammate] | `scripts/update_replication.py` |
-| | **Write unit tests for updated replication** | [Your Name] | `tests/test_update_replication.py` |
-| **Summary Statistics & Visualization** | Generate statistics and visualizations | [Your Name] / [Teammate] | `notebooks/summary.ipynb` |
-| | **Write unit tests for summary statistics** | [Teammate] | `tests/test_summary_stats.py` |
-| **Automation & Unit Tests** | Automate pipeline with PyDoit | [Your Name] | `dodo.py` |
-| | **Write unit tests for automation pipeline** | [Teammate] | `tests/test_pipeline.py` |
-| **GitHub & Version Control** | Each team member makes commits and PRs | [Your Name] / [Teammate] | GitHub PRs |
-| | Maintain clear Git commit messages | [Your Name] / [Teammate] | GitHub |
+| **Repository Setup** | Fork `jmbejara/blank_project`, edit README.md | Yangge & Sania | `README.md`, `.gitignore` |
+| | Add `.env.example` for environment variables |  Yangge / Sania | `.env.example` |
+| | Include `requirements.txt` for dependencies | Yangge / Sania | `requirements.txt` |
+| **LaTeX Report** | Write report, summarize findings | Yangge / Sania | `report.tex` |
+| **Data Handling** | Clean and preprocess data | Yangge / Sania | `src/data_cleaning.py` |
+| | Write unit tests for data cleaning | Yangge / Sania | `src/test_data_cleaning.py` |
+| **CDS Return Calculation** | Implement CDS return formula | Yangge / Sania| `src/cds_returns.py` |
+| | Write unit tests for return calculations | Yangge / Sania | `src/test_cds_returns.py` |
+| **Replication & Updates** | Replicate paper's tables & figures | Yangge / Sania | `src/replication.py` |
+| | Write unit tests for replication accuracy | Yangge / Sania | `src/test_replication.py` |
+| | Update analysis with recent data | Yangge / Sania | `src/update_replication.py` |
+| | Write unit tests for updated replication | Yangge / Sania | `src/test_update_replication.py` |
+| **Summary Statistics & Visualization** | Generate statistics and visualizations | Yangge / Sania | `notebooks/summary.ipynb` |
+| |Write unit tests for summary statistics | Yangge / Sania | `src/test_summary_stats.py` |
+| **Automation & Unit Tests** | Automate pipeline with PyDoit | Yangge / Sania | `dodo.py` |
+| | Write unit tests for automation pipeline | Yangge / Sania | `src/test_pipeline.py` |
+| **GitHub & Version Control** | Each team member makes commits and PRs | Yangge / Sania | GitHub PRs |
+| | Maintain clear Git commit messages | Yangge / Sania | GitHub |
 
 ---
 
