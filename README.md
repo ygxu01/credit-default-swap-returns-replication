@@ -86,6 +86,7 @@ pytest tests/test_cds_returns.py
 
 ## **Key References**
 1. **He, Kelly, and Manela (2017)** - Defines the CDS columns  
+He, Zhiguo, Bryan Kelly, and Asaf Manela, Intermediary Asset Pricing: New Evidence from Many Asset Classes, Journal of Financial Economics, 2017, Vol 126, Issue 1, pp. 1–35
 2. **Palhares (2013)** - CDS return calculations  
 3. **Markit Data** - Primary data source  
 
