@@ -3,25 +3,8 @@
 
 ## Project Overview  
 This project aims to **replicate the Credit Default Swap (CDS) columns** from the dataset used in **He, Kelly, and Manela (2017)**, following the methodology described in **Palhares (2013)**.  
-The goal is to construct and validate CDS returns using **Markit data** and perform analysis on both historical and updated CDS return series.
+The goal is to construct and validate CDS returns using WRDS data (Markit, Compustat, CRSP) and perform analysis on both historical and updated CDS return series.
 
----
-
-## **Project Structure**
-```
-cds-returns-replication
-├── figures/              # Figures for report and analysis
-├── requirements.txt      # Dependencies needed to run the project
-├── .gitignore            # Ensures no sensitive files are committed
-├── .env.example          # Example environment variable file
-├── dodo.py               # Automation pipeline using PyDoit
-└── README.md             # Project documentation
-
-[updating]
-```
-
-
----
 
 ## **Setup & Installation**
 ### **1. Clone the Repository**
@@ -49,28 +32,33 @@ pip install -r requirements.txt
 ---
 
 ## **Task Assignments**
-| **Category**  | **Task Description** | **Person Responsible** | **Related Files** |
-|--------------|--------------------|----------------------|----------------|
-| **Repository Setup** | Fork `jmbejara/blank_project`, edit README.md | Yangge & Sania | `README.md`, `.gitignore` |
-| | Add `.env.example` for environment variables |  Yangge / Sania | `.env.example` |
-| | Include `requirements.txt` for dependencies | Yangge / Sania | `requirements.txt` |
-| **LaTeX Report** | Write report, summarize findings | Yangge / Sania | `report.tex` |
-| **Data Handling** | Clean and preprocess data | Yangge / Sania | `src/data_cleaning.py` |
-| | Write unit tests for data cleaning | Yangge / Sania | `src/test_data_cleaning.py` |
-| **CDS Return Calculation** | Implement CDS return formula | Yangge / Sania| `src/cds_returns.py` |
-| | Write unit tests for return calculations | Yangge / Sania | `src/test_cds_returns.py` |
-| **Replication & Updates** | Replicate paper's tables & figures | Yangge / Sania | `src/replication.py` |
-| | Write unit tests for replication accuracy | Yangge / Sania | `src/test_replication.py` |
-| | Update analysis with recent data | Yangge / Sania | `src/update_replication.py` |
-| | Write unit tests for updated replication | Yangge / Sania | `src/test_update_replication.py` |
-| **Summary Statistics & Visualization** | Generate statistics and visualizations | Yangge / Sania | `notebooks/summary.ipynb` |
-| |Write unit tests for summary statistics | Yangge / Sania | `src/test_summary_stats.py` |
-| **Automation & Unit Tests** | Automate pipeline with PyDoit | Yangge / Sania | `dodo.py` |
-| | Write unit tests for automation pipeline | Yangge / Sania | `src/test_pipeline.py` |
-| **GitHub & Version Control** | Each team member makes commits and PRs | Yangge / Sania | GitHub PRs |
-| | Maintain clear Git commit messages | Yangge / Sania | GitHub |
+## Project Task Breakdown
 
----
+| **Category**                  | **Related File**             | **Task Description**                                                              | **Person Responsible** | **Status** |
+|--------------------------------|-----------------------------|----------------------------------------------------------------------------------|------------------------|------------|
+| **LaTeX Report**               | `report.tex`                | Compile a LaTeX document summarizing the replication project, including all generated tables and charts. | Sania                  |            |
+|                                |                             | Provide a high-level overview of the replication process, successes, and challenges. | Sania                  |            |
+|                                |                             | Discuss key findings and challenges encountered during the replication.           | Yangge & Sania         |            |
+|                                |                             | Explain the data sources used in the project.                                    | Yangge                 |            |
+| **LaTeX Automation**           | `.py`                       | Convert tables into LaTeX format automatically for inclusion in the report.      |                        |            |
+| **Jupyter Notebooks**          | `notebooks/summary.ipynb`   | Create a Jupyter notebook that provides an overview of the cleaned data and demonstrates key analysis steps. | Yangge & Sania | One notebook should be sufficient as datasets are interconnected. |
+| **Data Processing & Cleaning** | `pull_nyfed_dealer.py`      | Extract and preprocess primary dealer data.                                      | Yangge                 | ✅ Completed |
+|                                | `dealer_map_helper.csv`     | Manually map company names for consistency.                                     | Yangge                 | ✅ NA stocks finished |
+|                                | `pull_comp_fundq.py`        | Process and clean Compustat quarterly data.                                      | Yangge                 |            |
+|                                | `pull_crsp_monthly.py`      | Extract and clean monthly CRSP stock data.                                      | Yangge & Sania         |            |
+|                                | `pull_datastream.py`        | Extract and process Datastream data.                                            | Sania                  |            |
+| **Replication & Unit Testing** | unit test 2      | Verify replication accuracy through unit tests.                                 | Yangge                 | 🔄 In progress |
+|                                | unit test 2      | Ensure summary statistics computations are correct.                             | Yangge/Sania           |            |
+|                                | unit test 2        | Validate CDS return calculations with unit tests.                              | Yangge/Sania           |            |
+|                                | unit test 2         | Test the automation pipeline for reliability.                                  | Yangge/Sania           |            |
+| **Updates & Enhancements**     |                             | Integrate newly available data to refresh analysis results.                     |                        |            |
+| **Summary Statistics & Charts**|                             | Generate summary statistics and visualizations for the dataset.                 | Yangge & Sania         | ❓ Can we base this on a table from the paper? |
+| **Automation & Project Setup** | `dodo.py`                   | Automate the project workflow using PyDoit.                                     | Yangge & Sania         |            |
+|                                | `.env.example`              | Provide a template `.env` file for environment variables.                        | Yangge & Sania         |            |
+|                                | `requirements.txt`          | List all required Python dependencies.                                          | Yangge & Sania         |            |
+| **Code Formatting & Documentation** | `settings.py`         | Ensure all Python scripts include clear docstrings.                             | Yangge & Sania         |            |
+|                                | Function Naming Conventions | Use clear and descriptive function names for readability.                        | Yangge & Sania         |            |
+
 
 ## **Running Unit Tests**
 To ensure correctness, run all tests using `pytest`:
