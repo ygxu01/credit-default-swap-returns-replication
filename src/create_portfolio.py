@@ -65,6 +65,18 @@ def construct_cds_portfolios(monthly_returns, rd_df):
     return final_portfolio_returns
 
 
+def replicate_table(portfolio):
+    df_pivot = portfolio.pivot(index='yyyymm', columns='portfolio', values='daily_return')
+    df_pivot.columns = [f"CDS_{str(col).zfill(2)}" for col in df_pivot.columns]
+    return df_pivot
+
+
+def load_portfolio(data_dir=DATA_DIR):
+    path = data_dir / "portfolio_return.parquet" 
+    _df = pd.read_parquet(path)
+    return _df
+
+
 if __name__ == "__main__":
     daily_return_df = load_cds_return()
 
@@ -73,3 +85,7 @@ if __name__ == "__main__":
     monthly_return_df = calc_cds_monthly_return(daily_return_df)
 
     portfolio = construct_cds_portfolios(monthly_return_df,daily_return_df)
+
+    portfolio.to_parquet(DATA_DIR / "portfolio_return.parquet")
+
+
