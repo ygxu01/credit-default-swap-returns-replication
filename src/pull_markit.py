@@ -83,7 +83,7 @@ def merge_first_last_trades(first_trade_df, last_trade_df):
     """
     first_trade_df = first_trade_df.sort_values(by=["ticker", "redcode", "month"])
     last_trade_df = last_trade_df.sort_values(by=["ticker", "redcode", "month"])
-    last_trade_df["merge_month"] = last_trade_df["month"].shift(-1)
+    last_trade_df["merge_month"] = last_trade_df.groupby("ticker")["month"].shift(-1)
     merged_df = first_trade_df.merge(last_trade_df[["ticker","merge_month","midspread"]], how = "left", right_on=["ticker","merge_month"], left_on = ["ticker","month"])
     merged_df = merged_df.rename(columns = {"midspread_x": "spread", "midspread_y":"prev_spread"})
     merged_df = merged_df[["ticker","month","trade_date","spread","prev_spread"]]
@@ -101,5 +101,7 @@ if __name__ == "__main__":
     first_trade_df, last_trade_df = pull_markit_data()
     merged_df = merge_first_last_trades(first_trade_df, last_trade_df)
 
+    first_trade_df.to_parquet(DATA_DIR / "first_trade.parquet")
+    last_trade_df.to_parquet(DATA_DIR / "last_trade.parquet")
     merged_df.to_parquet(DATA_DIR / "Markit_CDS.parquet")
 
