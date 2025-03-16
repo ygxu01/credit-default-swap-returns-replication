@@ -1,10 +1,7 @@
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import wrds
 
 from settings import config
 
@@ -14,15 +11,7 @@ START_YEAR = config("START_YEAR")
 END_YEAR = config("END_YEAR")
 
 from calc_cds_daily_return import load_cds_return
-
-def generate_month_code(date):
-    year = date.year
-    month = date.month
-
-    if month >= 10:
-        return f"{year}{month}"
-    else:
-        return f"{year}0{month}"
+from misc_tools import generate_month_code
     
 
 def create_yyyymm_col(daily_rd_df):
@@ -65,7 +54,7 @@ def construct_cds_portfolios(monthly_returns, rd_df):
     return final_portfolio_returns
 
 
-def replicate_table(portfolio):
+def pivot_table(portfolio):
     df_pivot = portfolio.pivot(index='yyyymm', columns='portfolio', values='daily_return')
     df_pivot.columns = [f"CDS_{str(col).zfill(2)}" for col in df_pivot.columns]
     return df_pivot
