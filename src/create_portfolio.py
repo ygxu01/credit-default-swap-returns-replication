@@ -13,52 +13,63 @@ WRDS_USERNAME = config("WRDS_USERNAME")
 START_YEAR = config("START_YEAR")
 END_YEAR = config("END_YEAR")
 
-from calc_cds_t_return import load_cds_return
+from calc_cds_daily_return import load_cds_return
 
 def generate_month_code(date):
     year = date.year
     month = date.month
 
-    if month > 10:
+    if month >= 10:
         return f"{year}{month}"
     else:
         return f"{year}0{month}"
+    
+
+def create_yyyymm_col(daily_rd_df):
+    daily_rd_df["yyyymm"] = daily_rd_df["trade_date"].apply(generate_month_code)
+    return daily_rd_df
 
 
-def construct_cds_portfolios(cds_df, num_portfolios=20):
+def calc_cds_monthly_return(daily_rd_df):
     """
-    Constructs CDS portfolios by sorting firms into equal-sized portfolios 
-    each month based on their CDS spreads.
-
-    Args:
-        cds_df (pd.DataFrame): DataFrame with 'ticker', 'month', 'spread'.
-        num_portfolios (int): Number of portfolios (default = 20).
-
-    Returns:
-        pd.DataFrame: Portfolio assignment for each firm by month.
+    Compute the monthly return by compounding daily returns:
+    (1 + Monthly Return) = Π (1 + Daily Return)
     """
-    # Rank firms by CDS spread each month
-    cds_df["spread_rank"] = cds_df.groupby("month_code")["spread"].rank(method="first")
-
-    # Assign firms into portfolios (1 = lowest spreads, num_portfolios = highest spreads)
-    cds_df["portfolio"] = cds_df.groupby("month_code")["spread"].transform(
-        lambda x: pd.qcut(x, num_portfolios, labels=False) + 1
+    # Aggregate daily returns into monthly compounded returns
+    monthly_returns = (
+        daily_rd_df.groupby(["ticker", "yyyymm"])["daily_return"]
+        .apply(lambda x: (x + 1).prod() - 1)  # Compounding formula
+        .reset_index()
     )
 
-    return cds_df[["ticker", "month_code", "spread", "portfolio", "return"]]
+    return monthly_returns
 
-
-def calc_avg_portfolio_return(portfolio_df):
+def construct_cds_portfolios(monthly_returns, rd_df):
     """
-    Computes the average return for each CDS portfolio per month.
-
-    Args:
-        portfolio_df (pd.DataFrame): DataFrame with 'month', 'portfolio', 'return'.
-
-    Returns:
-        pd.DataFrame: Portfolio-level average returns per month.
+    Construct 20 portfolios sorted by the first trading day's CDS spread.
     """
-    # Compute equal-weighted average return per portfolio each month
-    portfolio_avg_return = portfolio_df.groupby(["month_code", "portfolio"])["return"].mean().reset_index()
+    # Get the first trading day of each month
+    first_day_spread = rd_df.groupby(["ticker", "yyyymm"]).first()["spread"].reset_index()
 
-    return portfolio_avg_return
+    # Rank tickers into 20 portfolios based on spread
+    first_day_spread["portfolio"] = first_day_spread.groupby("yyyymm")["spread"].transform(
+        lambda x: pd.qcut(x, 20, labels=False) + 1  
+    )
+
+    # Merge portfolio assignments into monthly returns
+    portfolio_returns = monthly_returns.merge(first_day_spread[["ticker", "yyyymm", "portfolio"]], on=["ticker", "yyyymm"])
+
+    # Compute value-weighted portfolio returns
+    final_portfolio_returns = portfolio_returns.groupby(["yyyymm", "portfolio"])["daily_return"].mean().reset_index()
+
+    return final_portfolio_returns
+
+
+if __name__ == "__main__":
+    daily_return_df = load_cds_return()
+
+    daily_return_df = create_yyyymm_col(daily_return_df)
+
+    monthly_return_df = calc_cds_monthly_return(daily_return_df)
+
+    portfolio = construct_cds_portfolios(monthly_return_df,daily_return_df)
