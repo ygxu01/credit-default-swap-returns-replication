@@ -62,12 +62,12 @@ def task_config():
         "clean": [],
     }
 
-def task_pull_cds_source():
-    """Extract CDS data from WRDS and save it to a structured file."""
+def task_pull_markit():
+    """Extract market data from WRDS and save it to a structured file."""
     return {
-        "actions": ["python src/pull_cds_source.py"],
-        "file_dep": ["src/pull_cds_source.py"],
-        "targets": [DATA_DIR / "raw_cds_data.csv"],
+        "actions": ["python src/pull_markit.py"],
+        "file_dep": ["src/pull_markit.py"],
+        "targets": [DATA_DIR / "raw_markit_data.csv"],
         "clean": True,
     }
 
@@ -75,32 +75,33 @@ def task_prepare_cds_analysis():
     """Transform raw CDS data: clean, resample, and categorize into portfolios."""
     return {
         "actions": ["python src/prepare_cds_analysis.py"],
-        "file_dep": ["src/prepare_cds_analysis.py", DATA_DIR / "raw_cds_data.csv"],
+        "file_dep": ["src/prepare_cds_analysis.py", DATA_DIR / "raw_markit_data.csv"],
         "targets": [DATA_DIR / "structured_cds_data.csv"],
         "clean": True,
     }
 
-def task_collect_rate_inputs():
-    """Gather and process interest rate data for calculations."""
+def task_pull_rf_data():
+    """Gather and process risk-free rate data for calculations."""
     return {
-        "actions": ["python src/collect_rate_inputs.py"],
-        "file_dep": ["src/collect_rate_inputs.py"],
+        "actions": ["python src/pull_rf_data.py"],
+        "file_dep": ["src/pull_rf_data.py"],
         "targets": [DATA_DIR / "market_rates.csv"],
         "clean": True,
     }
 
-def task_generate_cds_returns():
-    """Compute CDS portfolio returns following the research methodology."""
+def task_calc_cds_daily_return():
+    """Compute daily CDS portfolio returns following the research methodology."""
     return {
-        "actions": ["python src/generate_cds_returns.py"],
+        "actions": ["python src/calc_cds_daily_return.py"],
         "file_dep": [
-            "src/generate_cds_returns.py",
+            "src/calc_cds_daily_return.py",
             DATA_DIR / "structured_cds_data.csv",
             DATA_DIR / "market_rates.csv",
         ],
-        "targets": [DATA_DIR / "computed_cds_returns.csv"],
+        "targets": [DATA_DIR / "computed_cds_daily_returns.csv"],
         "clean": True,
     }
+
 
 # ==================================================
 # Task for Running Tests
