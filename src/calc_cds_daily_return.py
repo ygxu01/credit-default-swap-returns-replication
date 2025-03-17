@@ -42,9 +42,11 @@ def calc_risk_free_rate(rf_data):
     r_t_df.loc[:, :] = rf_data.apply(interpolate_row, axis=1)
     return r_t_df.astype(float)
 
+
 def calc_lambda(cds_df, L =0.6):
     cds_df["lambda"] = 12 * np.log(1+cds_df["spread"] / (12 * L))
     return cds_df
+
 
 def calc_risk_free_term(rf_data):
 
@@ -84,7 +86,7 @@ def calc_RD(cds_df, r_t_df, maturity = 5):
 
 
 def calc_cds_daily_return(rd_df):
-    rd_df["daily_return"] = rd_df["spread_prev"] / 250 + (rd_df["spread"] - rd_df["spread_prev"]) * rd_df["RD_prev"]
+    rd_df["daily_return"] = rd_df["spread_prev"] / 250 + (rd_df["spread_prev"] - rd_df["spread"]) * rd_df["RD_prev"]
     rd_df = rd_df.dropna(subset=["daily_return"])
     return rd_df
 

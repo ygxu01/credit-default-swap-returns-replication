@@ -45,11 +45,16 @@ def pull_markit_data(start_year=START_YEAR, end_year=END_YEAR, wrds_username=WRD
 
 
 def pull_markit_sector(start_year=START_YEAR, end_year=END_YEAR, wrds_username=WRDS_USERNAME):
+    """Pulls unique sector and ticker combinations for US 5Y tenor CDS from WRDS."""
+    
+    # Initialize WRDS Connection
     db = wrds.Connection(wrds_username=wrds_username)
-    df = pd.DataFrame()
+    
+    # List to store yearly DataFrames (faster than concatenating in loop)
+    results = []
 
     for year in range(int(start_year), int(end_year) + 1):
-        print(f"Pulling Year {year}")  
+        # print(f"Pulling Year {year}")  
         table = f"markit.cds{year}"
         query = f"""
         SELECT DISTINCT 
@@ -60,13 +65,20 @@ def pull_markit_sector(start_year=START_YEAR, end_year=END_YEAR, wrds_username=W
         AND country = 'United States'
         """
         new_df = db.raw_sql(query)
-        df = pd.concat([df, new_df])
+        new_df["year"] = year
+        results.append(new_df)  # Store in list instead of concatenating
 
+    # Close WRDS Connection
     db.close()
 
-    df = df.drop_duplicates(subset=["sector", "ticker"], inplace=True)
-
-    return df
+    # Concatenate all results into a single DataFrame
+    if results:
+        df = pd.concat(results, ignore_index=True)
+        df = df.drop_duplicates(subset=["sector", "ticker"])  # Drop duplicates correctly
+        return df
+    else:
+        print("No data found.")
+        return pd.DataFrame() 
 
 
 def load_markit_data(data_dir=DATA_DIR):
@@ -91,6 +103,8 @@ def load_multiple_data(data_dir=DATA_DIR):
 
 
 if __name__ == "__main__":
+    df = pull_markit_data()
+    # df.to_parquet(DATA_DIR / "raw_markit_data.parquet")
     for year in range(int(START_YEAR), int(END_YEAR) + 1):
         df = pull_markit_data(year, year)
         filename = f"markit_cds{year}.parquet"

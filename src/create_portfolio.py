@@ -33,6 +33,25 @@ def calc_cds_monthly_return(daily_rd_df):
 
     return monthly_returns
 
+def filter_tickers_by_min_months(monthly_rd_df, min_months=6):
+    """
+    Filters out tickers that have fewer than `min_months` of records.
+
+    Parameters:
+    monthly_rd_df (DataFrame): The input DataFrame with monthly CDS returns.
+    min_months (int): The minimum required months of data.
+
+    Returns:
+    DataFrame: Filtered DataFrame with only tickers meeting the requirement.
+    """
+    # Count number of unique months per ticker
+    month_counts = monthly_rd_df.groupby("ticker")["yyyymm"].nunique()
+
+    # Filter tickers that have at least `min_months` records
+    valid_tickers = month_counts[month_counts >= min_months].index
+    return monthly_rd_df[monthly_rd_df["ticker"].isin(valid_tickers)]
+
+
 def construct_cds_portfolios(monthly_returns, rd_df):
     """
     Construct 20 portfolios sorted by the first trading day's CDS spread.
@@ -72,6 +91,9 @@ if __name__ == "__main__":
     daily_return_df = create_yyyymm_col(daily_return_df)
 
     monthly_return_df = calc_cds_monthly_return(daily_return_df)
+    
+    #optional
+    monthly_return_df = filter_tickers_by_min_months(monthly_return_df, min_months=6)
 
     portfolio = construct_cds_portfolios(monthly_return_df,daily_return_df)
 

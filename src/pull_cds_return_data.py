@@ -17,7 +17,7 @@ def pull_real_cds_return():
     return actual_return
 
 
-def load_read_cds_return(data_dir = DATA_DIR):
+def load_real_cds_return(data_dir = DATA_DIR):
     path = data_dir / "actual_cds_return.parquet"
     _df = pd.read_parquet(path)
     return _df
