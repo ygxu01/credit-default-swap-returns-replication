@@ -44,8 +44,38 @@ def pull_markit_data(start_year=START_YEAR, end_year=END_YEAR, wrds_username=WRD
     return df
 
 
+def pull_markit_sector(start_year=START_YEAR, end_year=END_YEAR, wrds_username=WRDS_USERNAME):
+    db = wrds.Connection(wrds_username=wrds_username)
+    df = pd.DataFrame()
+
+    for year in range(int(start_year), int(end_year) + 1):
+        print(f"Pulling Year {year}")  
+        table = f"markit.cds{year}"
+        query = f"""
+        SELECT DISTINCT 
+            ticker, 
+            sector
+        FROM {table}
+        WHERE tenor = '5Y' 
+        AND country = 'United States'
+        """
+        new_df = db.raw_sql(query)
+        df = pd.concat([df, new_df])
+
+    db.close()
+
+    df = df.drop_duplicates(subset=["sector", "ticker"], inplace=True)
+
+    return df
+
+
 def load_markit_data(data_dir=DATA_DIR):
     path = data_dir / "Markit_CDS.parquet"
+    _df = pd.read_parquet(path)
+    return _df
+
+def load_sector_data(data_dir=DATA_DIR):
+    path = data_dir / "markit_ticker_sector_link_table.parquet"
     _df = pd.read_parquet(path)
     return _df
 
@@ -65,4 +95,8 @@ if __name__ == "__main__":
         df = pull_markit_data(year, year)
         filename = f"markit_cds{year}.parquet"
         df.to_parquet(DATA_DIR / filename)
+
+    df_sector = pull_markit_sector()
+    df_sector.to_parquet(DATA_DIR / "markit_ticker_sector_link_table.parquet")
+
 

@@ -10,7 +10,7 @@ WRDS_USERNAME = config("WRDS_USERNAME")
 START_YEAR = config("START_YEAR")
 END_YEAR = config("END_YEAR")
 
-from pull_markit import load_markit_data,load_multiple_data
+from pull_markit import load_markit_data,load_multiple_data, load_sector_data
 from pull_rf_data import load_fed_yield_curve, load_fred_data
 
 
@@ -19,6 +19,13 @@ def merge_rf_data(fed_data,fred_data,markit):
     rf_data = rf_data.merge(markit["trade_date"].drop_duplicates(),left_on="Date",right_on="trade_date", how="inner").set_index("trade_date")
     rf_data.index.name = "Date"
     return rf_data
+
+
+def filter_sector(markit, sector_df):
+    markit = pd.merge(markit, sector_df, on = "ticker", how = "left")
+    markit = markit[(markit["sector"] != "Financials") & (markit["sector"] != "Government")]
+
+    return markit
 
 
 def interpolate_row(y):
@@ -72,7 +79,7 @@ def calc_RD(cds_df, r_t_df, maturity = 5):
     rd_df["RD_prev"] = rd_df.groupby("ticker")["RD"].shift(1)
     rd_df["spread_prev"] = rd_df.groupby("ticker")["spread"].shift(1)
 
-    return rd_df[["ticker","trade_date","spread_prev","spread","RD","RD_prev"]]
+    return rd_df[["ticker","trade_date","spread_prev","spread","RD","RD_prev", "sector"]]
 
 
 
@@ -94,6 +101,10 @@ if __name__ == "__main__":
         markit = load_markit_data()
     else:
         markit = load_multiple_data()
+    
+    sector_df = load_sector_data()
+
+    markit = filter_sector(markit, sector_df)
     fed_data = load_fed_yield_curve()
     fred_data = load_fred_data()
 
