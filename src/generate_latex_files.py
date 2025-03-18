@@ -98,14 +98,14 @@ print(f"Saved plot to: {plot_path}")
 
 
 ## Graph2: Pre2012: Replicated CDS portfolios vs Actual CDS portfolios
-portfolio = create_portfolio.load_portfolio()
+portfolio = load_portfolio()
 actual_cds = load_real_cds_return()
 
 # Convert 'yyyymm' to proper date format
 portfolio["yyyymm"] = portfolio["yyyymm"].apply(month_code_to_date)
 
 # Create pivot table
-portfolio_pivot = create_portfolio.pivot_table(portfolio)
+portfolio_pivot = pivot_table(portfolio)
 
 # Filter the date range
 portfolio_pivot = portfolio_pivot[datetime.date(2001, 1, 1) : datetime.date(2012, 12, 1)]
