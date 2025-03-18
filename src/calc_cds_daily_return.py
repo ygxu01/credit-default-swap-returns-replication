@@ -16,7 +16,7 @@ START_YEAR = config("START_YEAR")
 END_YEAR = config("END_YEAR")
 
 from pull_markit import load_markit_data, load_multiple_data, load_sector_data
-from pull_rf_data import load_fed_yield_curve, load_fred_data
+from pull_interest_rates_data import load_fed_yield_curve, load_fred_data
 
 
 def merge_rf_data(fed_data, fred_data, markit):

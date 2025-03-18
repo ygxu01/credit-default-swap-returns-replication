@@ -75,11 +75,11 @@ def task_pull_markit():
         "clean": [],
     }
 
-def task_pull_rf_data():
+def task_pull_interest_rates_data():
     """Gather and process risk-free rate data for calculations."""
     return {
-        "actions": ["python src/pull_rf_data.py"],
-        "file_dep": ["src/pull_rf_data.py"],
+        "actions": ["python src/pull_interest_rates_data.py"],
+        "file_dep": ["src/pull_interest_rates_data.py"],
         "targets": [Path(DATA_DIR) / "fed_yield_curve.parquet",
                     Path(DATA_DIR) / "swap_rates.parquet"],
         "clean": [],
@@ -92,7 +92,7 @@ def task_calc_cds_daily_return():
         "file_dep": [
             "src/calc_cds_daily_return.py",
             "src/pull_markit.py",
-            "src/pull_rf_data.py"
+            "src/pull_interest_rates_data.py"
         ],
         "targets": [DATA_DIR / "CDS_daily_return.parquet"],
         "clean": True,
@@ -166,20 +166,33 @@ def task_generate_latex_outputs():
 # Task for Running Tests
 # ==================================================
 
-# def task_validate_outputs():
-#     """Run integrity checks on processed data and computed returns."""
-#     test_scripts = [
-#         "src/test_cds_source.py",
-#         "src/test_cds_analysis.py",
-#         "src/test_rate_inputs.py",
-#         "src/test_cds_returns.py",
-#     ]
+import subprocess
 
-#     def execute_tests():
-#         for script in test_scripts:
-#             subprocess.run(["python", script], check=True)
+def task_run_tests_validate():
+    """Run integrity checks on processed data and computed returns."""
 
-#     return {"actions": [execute_tests], "clean": True}
+    test_scripts = [
+        "src/test_calc_cds_daily_return.py",
+        "src/test_pull_cds_return_data.py",
+        "src/test_pull_interest_rates_data.py",
+        "src/test_pull_markit.py",
+        "src/test_replication_results.py",
+        "src/test_create_portfolio.py", 
+        "src/test_misc_tools.py",
+    ]
+
+    def execute_tests():
+        """Run all test scripts using subprocess"""
+        print("🚀 Running all test scripts...")
+        for script in test_scripts:
+            print(f"📌 Running: {script}")
+            subprocess.run(["python", script], check=True)
+        print(" All tests completed successfully.")
+
+    return {
+        "actions": [execute_tests],  
+        "verbosity": 2,  
+    }
 
 # ==================================================
 # Jupyter Notebook Execution Tasks

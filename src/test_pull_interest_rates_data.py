@@ -1,7 +1,7 @@
 import pandas as pd
 from pathlib import Path
 from settings import config
-import pull_rf_data
+import pull_interest_rates_data
 
 # Get DATA_DIR from settings
 DATA_DIR = Path(config("DATA_DIR"))
@@ -10,7 +10,7 @@ MANUAL_DATA_DIR = Path(config("MANUAL_DATA_DIR"))
 
 def test_pull_fed_yield_curve():
     """Test pulling Federal Reserve yield curve data."""
-    df = pull_rf_data.pull_fed_yield_curve()
+    df = pull_interest_rates_data.pull_fed_yield_curve()
 
     # Ensure it's a DataFrame
     assert isinstance(df, pd.DataFrame)
@@ -25,7 +25,7 @@ def test_pull_fed_yield_curve():
 
 def test_pull_swap_rates():
     """Test pulling swap rates data from FRED."""
-    df = pull_rf_data.pull_swap_rates()
+    df = pull_interest_rates_data.pull_swap_rates()
 
     # Ensure it's a DataFrame
     assert isinstance(df, pd.DataFrame)
