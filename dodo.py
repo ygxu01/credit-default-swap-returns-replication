@@ -266,11 +266,12 @@ def task_compile_latex_docs():
 
     file_dep = [
         "./reports/Final_Project.tex",
+        "./reports/SummaryStats.tex", 
         "./src/summary_stats.py",
     ]
 
     targets = [
-        "./reports/Final_Project.pdf"
+        "./reports/Final_Project.pdf",
         "./reports/SummaryStats.pdf",
     ]
 
