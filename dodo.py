@@ -5,7 +5,7 @@ import subprocess
 import shutil
 from os import environ
 from pathlib import Path
-
+import datetime
 sys.path.insert(1, "./src/")
 
 from settings import config
@@ -205,62 +205,69 @@ def task_generate_latex_outputs():
 # Jupyter Notebook Execution Tasks
 # ==================================================
 
-# notebook_tasks = {
-#     "01_cds_analysis.ipynb": {
-#         "file_dep": [
-#             "./src/pull_cds_source.py",
-#             "./src/prepare_cds_analysis.py",
-#         ],
-#         "targets": [],
-#     },
-# }
+notebook_tasks = {
+    "Final_Project.ipynb": {
+        "file_dep": [
+            "./src/pull_markit.py",
+            "./src/pull_cds_return_data.py",
+            "./src/calc_cds_daily_return.py",
+            "./src/create_portfolio.py",
+        ],
+        "targets": [],
+    },
+}
 
-# def task_convert_notebooks_to_scripts():
-#     """Convert notebooks to script form to detect changes to source code."""
-#     build_dir = Path(OUTPUT_DIR)
+def task_convert_notebooks_to_scripts():
+    """Convert notebooks to script form to detect changes to source code."""
+    build_dir = Path(OUTPUT_DIR)
     
-#     for notebook in notebook_tasks.keys():
-#         notebook_name = notebook.split(".")[0]
-#         yield {
-#             "name": notebook,
-#             "actions": [
-#                 jupyter_clear_output(notebook_name),
-#                 jupyter_to_python(notebook_name, build_dir),
-#             ],
-#             "file_dep": [Path("./src") / notebook],
-#             "targets": [OUTPUT_DIR / f"_{notebook_name}.py"],
-#             "clean": True,
-#         }
+    for notebook in notebook_tasks.keys():
+        notebook_name = notebook.split(".")[0]
+        yield {
+            "name": notebook,
+            "actions": [
+                jupyter_clear_output(notebook_name),
+                jupyter_to_python(notebook_name, build_dir),
+            ],
+            "file_dep": [Path("./src") / notebook],
+            "targets": [OUTPUT_DIR / f"_{notebook_name}.py"],
+            "clean": True,
+        }
 
-# def task_run_notebooks():
-#     """Execute notebooks and convert them into reports."""
-#     for notebook in notebook_tasks.keys():
-#         notebook_name = notebook.split(".")[0]
-#         yield {
-#             "name": notebook,
-#             "actions": [
-#                 f"python -c \"import sys; from datetime import datetime; print(f'Start {notebook}: {datetime.now()}', file=sys.stderr)\"",
-#                 jupyter_execute_notebook(notebook_name),
-#                 jupyter_to_html(notebook_name),
-#                 copy_file(
-#                     Path("./src") / f"{notebook_name}.ipynb",
-#                     OUTPUT_DIR / f"{notebook_name}.ipynb",
-#                     mkdir=True,
-#                 ),
-#                 jupyter_clear_output(notebook_name),
-#                 f"python -c \"import sys; from datetime import datetime; print(f'End {notebook}: {datetime.now()}', file=sys.stderr)\"",
-#             ],
-#             "file_dep": [
-#                 OUTPUT_DIR / f"_{notebook_name}.py",
-#                 *notebook_tasks[notebook]["file_dep"],
-#             ],
-#             "targets": [
-#                 OUTPUT_DIR / f"{notebook_name}.html",
-#                 OUTPUT_DIR / f"{notebook_name}.ipynb",
-#                 *notebook_tasks[notebook]["targets"],
-#             ],
-#             "clean": True,
-#         }
+def task_run_notebooks():
+    """Execute notebooks and convert them into reports."""
+    for notebook in notebook_tasks.keys():
+        notebook_name = notebook.split(".")[0]
+        yield {
+            "name": notebook,
+            "actions": [
+                f"python -c \"import sys; from datetime import datetime;\"",
+                jupyter_execute_notebook(notebook_name),
+                jupyter_to_html(notebook_name),
+                copy_file(
+                    Path("./src") / f"{notebook_name}.ipynb",
+                    OUTPUT_DIR / f"{notebook_name}.ipynb",
+                    mkdir=True,
+                ),
+                copy_file(
+                    OUTPUT_DIR / f"{notebook_name}.html",
+                    Path("docs") / f"{notebook_name}.html",
+                    mkdir=True,
+                ),
+                jupyter_clear_output(notebook_name),
+                f"python -c \"import sys; from datetime import datetime;\"",
+            ],
+            "file_dep": [
+                OUTPUT_DIR / f"_{notebook_name}.py",
+                *notebook_tasks[notebook]["file_dep"],
+            ],
+            "targets": [
+                OUTPUT_DIR / f"{notebook_name}.html",
+                OUTPUT_DIR / f"{notebook_name}.ipynb",
+                *notebook_tasks[notebook]["targets"],
+            ],
+            "clean": True,
+        }
 
 # ==================================================
 # Task for Compiling LaTeX Reports
