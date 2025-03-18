@@ -18,7 +18,6 @@
 !.env.example*
 
 # Other
-temp*.csv
 */_build/
 drafts/draft_bp.pdf
 
