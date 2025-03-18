@@ -84,14 +84,6 @@ def task_pull_markit():
         "clean": [],
     }
 
-# def task_prepare_cds_analysis():
-#     """Transform raw CDS data: clean, resample, and categorize into portfolios."""
-#     return {
-#         "actions": ["python src/prepare_cds_analysis.py"],
-#         "file_dep": ["src/prepare_cds_analysis.py", DATA_DIR / "raw_markit_data.csv"],
-#         "targets": [DATA_DIR / "structured_cds_data.csv"],
-#         "clean": True,
-#     }
 
 def task_pull_rf_data():
     """Gather and process risk-free rate data for calculations."""
@@ -127,6 +119,23 @@ def task_create_portfolio():
         "targets": [DATA_DIR / "portfolio_return.parquet"],
         "clean": True,
     }
+
+def task_summary_stats():
+    """Generate summary statistics files for the CDS portfolios."""
+    return {
+        "actions": ["python src/summary_stats.py"],
+        "file_dep": ["src/summary_stats.py",
+                     "src/msic_tools.py",
+                     "src/pull_cds_return_data.py",
+                     "src/create_portfolio.py",
+                     "src/pull_markit.py"],
+        "targets": [OUTPUT_DIR / "latex_cds_by_sector_stats.tex",
+                    OUTPUT_DIR / "monthly_returns_over_time.png"],
+        "clean": True,
+    }
+
+def task_generate_latex_files():
+    pass
 
 
 # ==================================================
@@ -218,18 +227,21 @@ def task_compile_latex_docs():
 
     file_dep = [
         "./reports/Final_Project.tex",
-        #"./src/example_plot.py",
+        "./src/summary_stats.py",
         #"./src/example_table.py"
     ]
 
     targets = [
         "./reports/Final_Project.pdf"
+        "./reports/SummaryStats.pdf",
     ]
 
     return {
         "actions": [
             "latexmk -xelatex -halt-on-error -cd ./reports/Final_Project.tex",  # Stop after 2 min
             "latexmk -xelatex -halt-on-error -c -cd ./reports/Final_Project.tex"  # Clean after 2 min
+            "latexmk -xelatex -halt-on-error -cd ./reports/SummaryStats.tex",  # Compile
+            "latexmk -xelatex -halt-on-error -c -cd ./reports/SummaryStats.tex",  # Clean
         ],
         "file_dep": file_dep,
         "targets": targets,

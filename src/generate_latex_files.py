@@ -21,7 +21,6 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 import seaborn as sns
-import create_portfolio
 from misc_tools import month_code_to_date
 from pull_cds_return_data import *
 from settings import config

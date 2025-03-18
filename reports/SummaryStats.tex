@@ -1,0 +1,65 @@
+\documentclass{article}
+%\usepackage[english]{babel}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Ensure necessary packages are included
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}  % Added for tabular rules
+\usepackage{hyperref}
+\usepackage{caption}
+
+\title{Project 8: Summary Statistics of CDS Portfolios}
+\author{Sania Zeb \& Yangge Xu}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This file aims to include figures and tables that introduce and summarize the 
+data used to construct the CDS portfolios in this project.
+
+While processing the data, we found a "sector" variable in Markit data worth investigating.
+We include a figure and a table that show the distribution of CDS contracts across different sectors. 
+This will help us understand the sectoral composition of our dataset and its potential impact on portfolio construction and return calculation.
+\end{abstract}
+
+\section{Statistics of CDS Contracts Across Sectors}
+
+\subsection{Sector-wise CDS Return Statistics}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Sector & Count & Mean & Std & Min & 25\% & 50\% & 75\% & Max \\
+\midrule
+Basic Materials & 14304 & -0.00383 & 0.04637 & -2.28340 & -0.00356 & -0.00073 & 0.00156 & 0.42903 \\
+Consumer Goods & 27285 & -0.00326 & 0.04440 & -3.19533 & -0.00348 & -0.00051 & 0.00147 & 1.33866 \\
+Consumer Services & 36391 & -0.00649 & 0.18363 & -33.02045 & -0.00530 & -0.00095 & 0.00190 & 2.76780 \\
+Energy & 19822 & -0.00287 & 0.04733 & -4.20222 & -0.00330 & -0.00053 & 0.00191 & 0.62895 \\
+Financials & 49071 & -0.00454 & 0.25424 & -54.89420 & -0.00252 & -0.00057 & 0.00129 & 0.98506 \\
+Government & 9465 & -0.00088 & 0.01091 & -0.16883 & -0.00168 & -0.00037 & 0.00061 & 0.15778 \\
+Healthcare & 16219 & -0.00119 & 0.01535 & -0.40044 & -0.00202 & -0.00050 & 0.00075 & 0.48762 \\
+Industrials & 31473 & -0.00280 & 0.03657 & -1.78786 & -0.00330 & -0.00063 & 0.00123 & 0.55938 \\
+Technology & 13548 & -0.00165 & 0.02555 & -0.82665 & -0.00292 & -0.00066 & 0.00118 & 0.53674 \\
+Telecom Services & 9349 & -0.00356 & 0.04225 & -1.68186 & -0.00358 & -0.00070 & 0.00131 & 0.56434 \\
+Utilities & 21582 & -0.00307 & 0.06416 & -5.89227 & -0.00215 & -0.00051 & 0.00087 & 3.14688 \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:sector_cds_stats} Summary Statistics of Monthly CDS Returns by Sector. 
+This table presents descriptive statistics (mean, standard deviation, min, max, and quartiles) 
+for CDS returns across different industry sectors. The variation in return volatility highlights sectoral differences, 
+with financials and consumer services exhibiting larger fluctuations than government and healthcare.}
+\end{table}
+
+\subsection{Monthly CDS Returns Over Time}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{monthly_returns_over_time.png}  % Adjusted path
+    \caption{\label{fig:monthly_cds_returns} Monthly CDS Portfolio Returns Over Time. 
+This figure illustrates the trend of average monthly CDS returns. 
+Fluctuations highlight financial stress and stability periods, providing insight into the risk and performance of credit default swaps.}
+\end{figure}
+
+\end{document}
