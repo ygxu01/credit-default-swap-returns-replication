@@ -32,28 +32,31 @@ pip install -r requirements.txt
 ---
 
 ## **Task Assignments**
+**Although specific tasks are assigned to individual team members, we work collaboratively as a team. Each member actively reviews and provides feedback on others' code and writing to ensure accuracy, clarity, and consistency. We also assist each other in debugging and refining our work.**
+
 ## Project Task Breakdown
 
 | **Category**                  | **Related File**             | **Task Description**                                                              | **Person Responsible** | **Status** |
 |--------------------------------|-----------------------------|----------------------------------------------------------------------------------|------------------------|------------|
-| **LaTeX Report**               | `report.tex`                | Compile a LaTeX document summarizing the replication project, including all generated tables and charts. | Sania                  |            |
+| **LaTeX Report**               | `./reports/Final_Project.tex`                | Compile a LaTeX document summarizing the replication project, including all generated tables and charts. | Sania                  |            |
 |                                |                             | Provide a high-level overview of the replication process, successes, and challenges. | Sania                  |            |
-|                                |                             | Discuss key findings and challenges encountered during the replication.           | Yangge & Sania         |            |
-|                                |                             | Explain the data sources used in the project.                                    | Yangge                 |            |
-| **LaTeX Automation**           | `.py`                       | Convert tables into LaTeX format automatically for inclusion in the report.      |                        |            |
-| **Jupyter Notebooks**          | `notebooks/summary.ipynb`   | Create a Jupyter notebook that provides an overview of the cleaned data and demonstrates key analysis steps. | Yangge & Sania | One notebook should be sufficient as datasets are interconnected. |
-| **Data Processing & Cleaning** | `pull_markit_cds.py`      | Extract and preprocess cds data.                                      | Yangge                 |  |
-|                                | `load_markit.py`     | Clean the data                                     | Yangge & Sania                 |  |
-| **Replication & Unit Testing** | Replication      |                                 | Yangge                 |  |
-|                                | Replication      |                             | Sania           |            |
-|                                | unit test 3        |                               | Yangge/Sania           |            |
-|                                | unit test 4        |                                  | Yangge/Sania           |            |
+|                                |                             | Discuss key findings and challenges encountered during the replication.           | Sania         |            |
+|                                |                             | Explain the data sources used in the project.                                    | Sania                |            |
+| **LaTeX Automation**           | `dodo.py`                       | Convert tables into LaTeX format automatically for inclusion in the report.      |   Sania & Yangge                     |            |
+| **Jupyter Notebooks**          | `./src/Final_Project.ipynb`   | Create a Jupyter notebook that provides an overview of the cleaned data and demonstrates key analysis steps. | Sania | One notebook should be sufficient as datasets are interconnected. |
+| **Data Processing & Cleaning** | `./src/pull_markit_cds.py`      | Extract and preprocess cds data.                                      | Yangge & Sania                  |  |
+|                                | `./src/pull_interest_rates_data.py`     | Clean the data                                     | Yangge                 |  |
+|                                | `./src/pull_cds_return_data.py`     | Clean the data                                     | Yangge                 |  |
+|                                | `./src/calc_cds_daily_return.py`     | Clean the data                                     | Yangge                 |  |
+|                                | `./src/create_portfolio.py`     | Clean the data                                     | Yangge                 |  |
+| **Unit Testing** | Unit Tests   |    `./src/test_.py`                              | Yangge                 |  |
+
 | **Updates & Enhancements**     |                             | Integrate newly available data to refresh analysis results.                     |                        |            |
-| **Summary Statistics & Charts**|                             | Generate summary statistics and visualizations for the dataset.                 | Yangge & Sania         | |
+| **Summary Statistics & Charts**|                             | Generate summary statistics and visualizations for the dataset.                 | Yangge       | |
 | **Automation & Project Setup** | `dodo.py`                   | Automate the project workflow using PyDoit.                                     | Yangge & Sania         |            |
 |                                | `.env.example`              | Provide a template `.env` file for environment variables.                        | Yangge & Sania         |            |
 |                                | `requirements.txt`          | List all required Python dependencies.                                          | Yangge & Sania         |            |
-| **Code Formatting & Documentation** | `settings.py`         | Ensure all Python scripts include clear docstrings.                             | Yangge & Sania         |            |
+| **Code Formatting & Documentation** |         | Ensure all Python scripts include clear docstrings.                             | Sania         |            |
 |                                | Function Naming Conventions | Use clear and descriptive function names for readability.                        | Yangge & Sania         |            |
 
 
@@ -77,6 +80,6 @@ He, Zhiguo, Bryan Kelly, and Asaf Manela, Intermediary Asset Pricing: New Eviden
 
 ---
 
-## 👥 **Team Members**
+## **Team Members**
 - **Sania Zeb** 
 - **Yangge Xu** 
