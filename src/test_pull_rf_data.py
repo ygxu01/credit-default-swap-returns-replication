@@ -1,9 +1,6 @@
-import pytest
 import pandas as pd
 from pathlib import Path
 from settings import config
-import pull_cds_return_data
-import pull_markit
 import pull_rf_data
 
 # Get DATA_DIR from settings
