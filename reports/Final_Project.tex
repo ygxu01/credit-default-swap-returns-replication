@@ -1,0 +1,84 @@
+\documentclass{article}
+
+% Language setting
+\usepackage[english]{babel}
+
+% Set page size and margins
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Credit Default Swap (CDS) Portfolio Construction and Return Calculation}
+\author{Sania Zeb \& Yangge Xu}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+This project replicates the construction of Credit Default Swap (CDS) returns as presented in Kelly et al. (2017) using raw Markit data accessed through Wharton Research Data Services (WRDS). The goal is to reconstruct the CDS return series from contract-level data and validate the replication against the original dataset. The replication process follows the return calculation framework outlined by Palhares (2013), which defines CDS returns based on the combined impact of insurance premium payments and credit spread changes. \\
+
+A key challenge in this replication is handling **post-2008 changes in Markit's CDS data structure**. Initial comparisons revealed that variable definitions and data availability shifted after 2009, necessitating adjustments in extraction queries. Several critical variables, including `parspread`, `creditdv01`, and `riskypv01`, were either renamed, redefined, or missing entirely in the post-2009 dataset. Furthermore, differences in sectoral classification and contract aggregation required careful adjustments to ensure consistency across the full time span of the dataset (2001–2025). Risk-free rate information was sourced from the Federal Reserve's yield curve and FRED databases. \\
+
+The replication process consists of several key steps: (1) extracting and cleaning CDS contract-level data from Markit, (2) constructing return series based on the methodology of Palhares (2013), (3) forming 20 portfolios sorted by credit spreads, and (4) comparing the results to the original dataset to identify potential discrepancies. While **pre-2008 CDS returns align closely with the original data**, post-2009 estimates exhibit greater deviations, particularly in higher spread portfolios.
+
+\section{CDS Return Calculation Methodology}
+
+\subsection{Portfolio Construction and Data Extraction}
+
+The CDS portfolios are constructed by sorting individual 5-year CDS contracts into 20 quantiles based on their credit spreads, following the methodology of He, Kelly, and Manela (2017). This sorting process occurs at the end of each month, ensuring that portfolios dynamically reflect changes in market conditions. The data is sourced from Markit via WRDS, with individual contracts filtered based on tenor (5-year) and country (United States). Given that 5-year CDS contracts are the most liquid instruments in this market, they serve as a standardized measure of credit risk. \\
+
+\subsection{CDS Return Formula}
+
+The return on a CDS contract is calculated using the definition provided by Palhares (2013), which decomposes the return into two components: the carry return and the capital gain return. The one-day return for a short CDS position (assuming no default) is given by:
+
+\begin{equation}
+    CDS_{ret, t} = \frac{CDS_{t-1}}{250} + \Delta CDS_t \times RD_{t-1}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $CDS_t$ represents the CDS spread at time $t$,
+    \item $RD_{t-1}$ is the risky duration of the contract, and
+    \item $\Delta CDS_t$ is the change in spreads.
+\end{itemize}
+
+The first term represents the **carry return**, while the second term captures **capital gain return**.
+
+\subsection{Risky Duration Computation}
+
+Risky duration, $RD_t$, is computed as:
+
+\begin{equation}
+    RD_t = \frac{1}{4} \sum_{j=1}^{4M} e^{-j\lambda/4} e^{-j(r_{j/4,t})/4}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $e^{-j\lambda/4}$ represents the quarterly survival probability,
+    \item $r_{j/4,t}$ is the risk-free rate for each quarter, and
+    \item $e^{-j(r_{j/4,t})/4}$ is the discount function.
+\end{itemize}
+
+The default intensity parameter, $\lambda$, is extracted using:
+
+\begin{equation}
+    \lambda = 4 \log \left(1 + \frac{CDS}{4L} \right)
+\end{equation}
+
+where **$L$ is the assumed loss given default**, typically set at 60%.
+
+\section{Key Findings}
+
+\section{Conclusion and Future Work}
+
+This replication successfully reconstructs CDS return portfolios using Markit data and verifies their accuracy against the original dataset. Future refinements should focus on improving data extraction consistency, refining the weighting mechanism for CDS spreads, and investigating alternative liquidity filters to enhance portfolio construction accuracy.
+
+\section{References}
+Kelly, B., Lustig, H., \& Van Nieuwerburgh, S. (2017). Firm Volatility in Granular Networks. *The Journal of Political Economy, 125*(5), 1326–1372.  
+
+\end{document}
