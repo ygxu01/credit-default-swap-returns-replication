@@ -16,6 +16,12 @@ def pull_real_cds_return():
     actual_return = actual_return.dropna(axis=0)
     return actual_return
 
+def unpivot_table(real_cds_return):
+    df_unpivoted = real_cds_return.reset_index().melt(id_vars=['yyyymm'], var_name='portfolio', value_name='monthly_return')
+
+    df_unpivoted['portfolio'] = df_unpivoted['portfolio'].str.extract(r'(\d+)').astype(int)
+
+    return df_unpivoted
 
 def load_real_cds_return(data_dir = DATA_DIR):
     path = data_dir / "actual_cds_return.parquet"

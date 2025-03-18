@@ -81,12 +81,12 @@ def calc_RD(cds_df, r_t_df, maturity = 5):
     rd_df["RD_prev"] = rd_df.groupby("ticker")["RD"].shift(1)
     rd_df["spread_prev"] = rd_df.groupby("ticker")["spread"].shift(1)
 
-    return rd_df[["ticker","trade_date","spread_prev","spread","RD","RD_prev", "sector"]]
-
+    columns_available = [col for col in ["ticker", "trade_date", "spread_prev", "spread", "RD", "RD_prev", "sector"] if col in rd_df.columns]
+    return rd_df[columns_available]
 
 
 def calc_cds_daily_return(rd_df):
-    rd_df["daily_return"] = rd_df["spread_prev"] / 250 + (rd_df["spread_prev"] - rd_df["spread"]) * rd_df["RD_prev"]
+    rd_df["daily_return"] = - (rd_df["spread_prev"] / 250 + (rd_df["spread"] - rd_df["spread_prev"]) * rd_df["RD_prev"])
     rd_df = rd_df.dropna(subset=["daily_return"])
     return rd_df
 
@@ -106,7 +106,8 @@ if __name__ == "__main__":
     
     sector_df = load_sector_data()
 
-    markit = filter_sector(markit, sector_df)
+    # markit = filter_sector(markit, sector_df)
+
     fed_data = load_fed_yield_curve()
     fred_data = load_fred_data()
 
