@@ -206,6 +206,10 @@ def task_generate_latex_outputs():
 # ==================================================
 
 notebook_tasks = {
+    "index.ipynb": {
+        "file_dep": [],
+        "targets": [],
+    },
     "Final_Project.ipynb": {
         "file_dep": [
             "./src/pull_markit.py",
@@ -241,7 +245,7 @@ def task_run_notebooks():
         yield {
             "name": notebook,
             "actions": [
-                f"python -c \"import sys; from datetime import datetime;\"",
+                """python -c "import sys; from datetime import datetime; print(f'Start """ + notebook + """: {datetime.now()}', file=sys.stderr)" """,
                 jupyter_execute_notebook(notebook_name),
                 jupyter_to_html(notebook_name),
                 copy_file(
@@ -251,11 +255,11 @@ def task_run_notebooks():
                 ),
                 copy_file(
                     OUTPUT_DIR / f"{notebook_name}.html",
-                    Path("docs") / f"{notebook_name}.html",
+                    Path("docs_src") / f"{notebook_name}.html",
                     mkdir=True,
                 ),
                 jupyter_clear_output(notebook_name),
-                f"python -c \"import sys; from datetime import datetime;\"",
+                 """python -c "import sys; from datetime import datetime; print(f'End """ + notebook + """: {datetime.now()}', file=sys.stderr)" """,
             ],
             "file_dep": [
                 OUTPUT_DIR / f"_{notebook_name}.py",
@@ -299,6 +303,8 @@ def task_compile_latex_docs():
         "targets": targets,
         "clean": True
     }
+
+
 
 
 # ==================================================
