@@ -8,6 +8,7 @@
 \usepackage{booktabs}  % Added for tabular rules
 \usepackage{hyperref}
 \usepackage{caption}
+\usepackage{float}  % Required for [H] to work with tables and figures
 
 \title{Project 8: Summary Statistics of CDS Portfolios}
 \author{Sania Zeb \& Yangge Xu}
@@ -33,7 +34,7 @@ Table below presents the summary statistics of monthly CDS returns across differ
 \paragraph{Key Findings:}
 
 \subsection{Monthly CDS Returns Over Time}
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{../_output/monthly_returns_over_time.png}  % Adjusted path
     \caption{\label{fig:monthly_cds_returns} Monthly CDS Portfolio Returns Over Time. 
@@ -52,7 +53,6 @@ Figure above presents the time series of monthly Credit Default Swap (CDS) portf
     \item \textbf{Post-Crisis Stability:} Post-2010, returns appear to stabilize, with fewer extreme negative values, suggesting reduced systemic risk in the CDS market or improved credit conditions over time.
     \item \textbf{Effect of Financial Crises:} The observed dips in CDS returns align with key economic downturns, highlighting the role of macroeconomic factors in driving credit risk pricing.
 \end{itemize}
-
 
 Understanding these return fluctuations is crucial for market participants who rely on CDS contracts for risk management and speculative purposes. The presence of negative return spikes suggests that during periods of financial distress, CDS portfolios experience significant mark-to-market losses, underscoring the importance of hedging strategies.
 
@@ -89,10 +89,5 @@ The findings suggest that CDS returns are not uniform across sectors. Investors 
     with financials and consumer services exhibiting larger fluctuations than government and healthcare.}
     \label{tab:cds_summary}
 \end{table}
-
-
-
-
-
 
 \end{document}
