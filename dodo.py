@@ -128,6 +128,16 @@ def task_create_portfolio():
         "clean": True,
     }
 
+def task_pull_cds_return_data():
+    """Pull the original CDS return data from the paper."""
+    return {
+        "actions": ["python src/pull_cds_return_data.py"],
+        "file_dep": ["src/pull_cds_return_data.py",
+                     MANUAL_DATA_DIR / "He_Kelly_Manela_Factors_And_Test_Assets_monthly.csv"],
+        "targets": [DATA_DIR / "actual_cds_return.parquet"],
+        "clean": True,
+    }
+
 
 # ==================================================
 # Task for Running Tests
