@@ -37,7 +37,7 @@ $$
 ## **Setup & Installation**
 ### **1. Clone the Repository**
 ```bash
-git clone https://github.com/yourusername/cds-returns-replication.git
+git clone https://github.com/ygxu01/credit-default-returns-replication.git
 cd cds-returns-replication
 ```
 
@@ -91,11 +91,11 @@ pip install -r requirements.txt
 ## **Running Unit Tests**
 To ensure correctness, run all tests using `pytest`:
 ```bash
-pytest tests/
+pytest 
 ```
 To run a specific test:
 ```bash
-pytest tests/test_cds_returns.py
+pytest task_file::task_name
 ```
 
 ---
