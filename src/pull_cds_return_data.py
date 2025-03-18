@@ -6,6 +6,7 @@ from misc_tools import month_code_to_date
 
 MANUAL_DATA_DIR = Path(config("MANUAL_DATA_DIR"))
 DATA_DIR = Path(config("DATA_DIR"))
+OUTPUT_DIR = Path(config("OUTPUT_DIR"))  # Define the output directory for CSV
 
 def pull_real_cds_return():
     '''
@@ -24,7 +25,6 @@ def unpivot_table(real_cds_return):
     '''
     Unpivoting the table to get the returns in long format
     '''
-
     df_unpivoted = real_cds_return.reset_index().melt(id_vars=['yyyymm'], var_name='portfolio', value_name='monthly_return')
 
     df_unpivoted['portfolio'] = df_unpivoted['portfolio'].str.extract(r'(\d+)').astype(int)
@@ -38,5 +38,11 @@ def load_real_cds_return(data_dir = DATA_DIR):
     return _df
 
 if __name__ == "__main__":
+    # Pull the actual CDS return data
     df = pull_real_cds_return()
+
+    # Save it as a parquet file
     df.to_parquet(DATA_DIR / "actual_cds_return.parquet")
+
+    # Save it as a CSV file to the output directory
+    df.to_csv(OUTPUT_DIR / "actual_cds_return.csv")

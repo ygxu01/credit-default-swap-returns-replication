@@ -63,15 +63,6 @@ def task_config():
         "clean": [],
     }
 
-# def task_pull_markit():
-#     """Extract market data from WRDS and save it to a structured file."""
-#     return {
-#         "actions": ["python src/pull_markit.py"],
-#         "file_dep": ["src/pull_markit.py"],
-#         "targets": [DATA_DIR / "raw_markit_data.parquet"],
-#         "clean": [],
-#     }
-
 
 def task_pull_markit():
     """
@@ -84,7 +75,10 @@ def task_pull_markit():
         "clean": [],
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e38e643 (Updates)
 def task_pull_rf_data():
     """Gather and process risk-free rate data for calculations."""
     return {
@@ -120,6 +114,7 @@ def task_create_portfolio():
         "clean": True,
     }
 
+<<<<<<< HEAD
 def task_summary_stats():
     """Generate summary statistics files for the CDS portfolios."""
     return {
@@ -136,6 +131,39 @@ def task_summary_stats():
 
 def task_generate_latex_files():
     pass
+=======
+def task_actual_cds():
+    """create portfolio by running pull_cds_return_data.py"""
+    return {
+        "actions": ["python src/pull_cds_return_data.py"],  # Change to run pull_cds_return_data.py
+        "file_dep": [
+            "src/pull_cds_return_data.py",  # Add dependencies
+            "src/misc_tools.py",  # Ensure any necessary dependencies are included
+        ],
+        "targets": [DATA_DIR / "actual_cds_return.parquet"],  # Adjust target file to reflect the output
+        "clean": True,  # Ensure the task is cleaned up after execution
+    }
+
+
+def task_generate_latex_outputs():
+    """Generate tables and plots for LaTeX reports."""
+    return {
+        "actions": ["python src/generate_latex_files.py"],
+        "file_dep": [
+            "src/generate_latex_files.py",
+            "src/misc_tools.py",
+            "src/create_portfolio.py",
+        ],
+        "targets": [
+            OUTPUT_DIR / "latex_table1_replicated_cds.csv",
+            OUTPUT_DIR / "latex_table2_replicated_summary.csv",
+            OUTPUT_DIR / "cds_portfolio_returns.png",
+            OUTPUT_DIR / "cds_comparison_CDS_10.png",
+        ],
+        "clean": True,
+    }
+
+>>>>>>> e38e643 (Updates)
 
 
 # ==================================================
@@ -238,10 +266,15 @@ def task_compile_latex_docs():
 
     return {
         "actions": [
+<<<<<<< HEAD
             "latexmk -xelatex -halt-on-error -cd ./reports/Final_Project.tex",  # Stop after 2 min
             "latexmk -xelatex -halt-on-error -c -cd ./reports/Final_Project.tex"  # Clean after 2 min
             "latexmk -xelatex -halt-on-error -cd ./reports/SummaryStats.tex",  # Compile
             "latexmk -xelatex -halt-on-error -c -cd ./reports/SummaryStats.tex",  # Clean
+=======
+            "latexmk -xelatex -halt-on-error -cd ./reports/Final_Project.tex",  
+            "latexmk -xelatex -halt-on-error -c -cd ./reports/Final_Project.tex" 
+>>>>>>> e38e643 (Updates)
         ],
         "file_dep": file_dep,
         "targets": targets,

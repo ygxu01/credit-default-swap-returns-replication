@@ -1,8 +1,5 @@
 \documentclass{article}
 
-% Language setting
-%\usepackage[english]{babel}
-
 % Set page size and margins
 \usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
@@ -73,6 +70,38 @@ The default intensity parameter, $\lambda$, is extracted using:
 where **$L$ is the assumed loss given default**, typically set at 60%.
 
 \section{Key Findings}
+
+% Table 1: Replicated CDS Portfolios Snapshot
+\begin{table}[H]
+    \centering
+    \caption{Replicated CDS Portfolios Snapshot}
+    \label{tab:cds_snapshot}
+    \input{../output/latex_table1_replicated_cds.tex}  % Dynamically insert the table file
+\end{table}
+
+% Table 2: CDS Summary Statistics
+\begin{table}[H]
+    \centering
+    \caption{CDS Portfolio Summary Statistics}
+    \label{tab:cds_summary}
+    \input{../output/latex_table2_replicated_summary.tex}  % Dynamically insert the table file
+\end{table}
+
+This section presents various CDS portfolio visualizations and comparisons.
+
+% CDS Portfolio Returns Plot
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../output/cds_portfolio_returns.png}  % Call dynamically created file
+    \caption{\label{fig:cds_portfolio_returns}CDS Portfolio Returns Over Time.}
+\end{figure}
+
+% CDS Replication vs. Actual Comparison Plot
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../output/cds_comparison_CDS_10.png}  % Call dynamically created file
+    \caption{\label{fig:cds_comparison}Comparison of Replicated vs. Actual CDS Portfolio (CDS 10).}
+\end{figure}
 
 \section{Conclusion and Future Work}
 
