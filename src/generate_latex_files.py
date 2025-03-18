@@ -40,7 +40,8 @@ df = pivot_table(df).iloc[1:]
 df_subset = df.iloc[:5, :10]
 df_subset.index = df_subset.index.astype(int)
 df_subset = df_subset.reset_index()
-latex_table_string = df_subset.to_latex(float_format=float_format_func)
+latex_table_string = df_subset.to_latex(float_format=float_format_func, escape=True)
+
 print(latex_table_string)
 
 path = OUTPUT_DIR / f'latex_table1_replicated_cds.tex'
@@ -56,7 +57,7 @@ monthly_return_summary = monthly_return.describe()["daily_return"].to_frame()
 monthly_return_summary = monthly_return_summary.rename(columns={"daily_return": "monthly_return"})[1:]
 monthly_return_summary.index = ["mean","std","min","0.25","0.5","0.75","max"]
 
-latex_table_string = monthly_return_summary .to_latex(float_format=float_format_func)
+latex_table_string = monthly_return_summary .to_latex(float_format=float_format_func, escape =True)
 
 
 path = OUTPUT_DIR / f'latex_table2_replicated_summary.tex'
