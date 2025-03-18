@@ -125,7 +125,7 @@ def task_summary_stats():
     return {
         "actions": ["python src/summary_stats.py"],
         "file_dep": ["src/summary_stats.py",
-                     "src/msic_tools.py",
+                     "src/misc_tools.py",
                      "src/pull_cds_return_data.py",
                      "src/create_portfolio.py",
                      "src/pull_markit.py"],
