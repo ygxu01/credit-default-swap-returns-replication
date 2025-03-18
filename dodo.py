@@ -141,26 +141,6 @@ def task_actual_cds_data():
         "clean": True,  # Clean after execution
     }
 
-def task_generate_latex_outputs():
-    """Generate tables and plots for LaTeX reports."""
-    return {
-        "actions": ["python src/generate_latex_files.py"],
-        "file_dep": [
-            "src/generate_latex_files.py",
-            "src/misc_tools.py",
-            "src/create_portfolio.py",
-        ],
-        "targets": [
-            OUTPUT_DIR / "latex_table1_replicated_cds.csv",
-            OUTPUT_DIR / "latex_table2_replicated_summary.csv",
-            OUTPUT_DIR / "cds_portfolio_returns.png",
-            OUTPUT_DIR / "cds_comparison_CDS_10.png",
-        ],
-        "clean": True,
-    }
-
-
-
 
 # ==================================================
 # Task for Running Tests
@@ -183,15 +163,37 @@ def task_run_tests_validate():
 
     def execute_tests():
         """Run all test scripts using subprocess"""
-        print("🚀 Running all test scripts...")
+        print(" Running all test scripts...")
         for script in test_scripts:
-            print(f"📌 Running: {script}")
+            print(f"Running: {script}")
             subprocess.run(["python", script], check=True)
         print(" All tests completed successfully.")
 
     return {
         "actions": [execute_tests],  
         "verbosity": 2,  
+    }
+
+# ==================================================
+# Task for Latex Plots & Tables 
+# ==================================================
+
+def task_generate_latex_outputs():
+    """Generate tables and plots for LaTeX reports."""
+    return {
+        "actions": ["python src/generate_latex_files.py"],
+        "file_dep": [
+            "src/generate_latex_files.py",
+            "src/misc_tools.py",
+            "src/create_portfolio.py",
+        ],
+        "targets": [
+            OUTPUT_DIR / "latex_table1_replicated_cds.csv",
+            OUTPUT_DIR / "latex_table2_replicated_summary.csv",
+            OUTPUT_DIR / "cds_portfolio_returns.png",
+            OUTPUT_DIR / "cds_comparison_CDS_10.png",
+        ],
+        "clean": True,
     }
 
 # ==================================================
