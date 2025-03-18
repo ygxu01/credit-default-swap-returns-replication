@@ -30,7 +30,7 @@ OUTPUT_DIR = Path(config("OUTPUT_DIR"))
 
 ## Suppress scientific notation and limit to 3 decimal places
 # Sets display, but doesn't affect formatting to LaTeX
-pd.set_option('display.float_format', lambda x: '%.2f' % x)
+pd.set_option('display.float_format', lambda x: '%.5f' % x)
 # Sets format for printing to LaTeX
 float_format_func = lambda x: '{:.5f}'.format(x)
 
@@ -39,7 +39,7 @@ df = load_portfolio()
 df = pivot_table(df).iloc[1:]
 df_subset = df.iloc[:5, :10]
 df_subset.index = df_subset.index.astype(int)
-
+df_subset = df_subset.reset_index()
 latex_table_string = df_subset.to_latex(float_format=float_format_func)
 print(latex_table_string)
 
@@ -54,6 +54,7 @@ cds2012 = cds[cds["trade_date"] < "2013-01-01"]
 monthly_return = calc_cds_monthly_return(create_yyyymm_col(cds2012))
 monthly_return_summary = monthly_return.describe()["daily_return"].to_frame()
 monthly_return_summary = monthly_return_summary.rename(columns={"daily_return": "monthly_return"})[1:]
+monthly_return_summary.index = ["mean","std","min","0.25","0.5","0.75","max"]
 
 latex_table_string = monthly_return_summary .to_latex(float_format=float_format_func)
 

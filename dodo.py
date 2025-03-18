@@ -282,10 +282,11 @@ def task_compile_latex_docs():
 
     return {
         "actions": [
+            "latexmk -xelatex -halt-on-error -cd ./reports/SummaryStats.tex",  # Compile
+            "latexmk -xelatex -halt-on-error -c -cd ./reports/SummaryStats.tex",
             "latexmk -xelatex -halt-on-error -cd ./reports/Final_Project.tex",  # Stop after 2 min
             "latexmk -xelatex -halt-on-error -c -cd ./reports/Final_Project.tex",  # Clean after 2 min
-            "latexmk -xelatex -halt-on-error -cd ./reports/SummaryStats.tex",  # Compile
-            "latexmk -xelatex -halt-on-error -c -cd ./reports/SummaryStats.tex",  # Clean
+   # Clean
         ],
         "file_dep": file_dep,
         "targets": targets,
