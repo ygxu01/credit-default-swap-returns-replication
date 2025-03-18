@@ -28,17 +28,23 @@ This will help us understand the sectoral composition of our dataset and its pot
 
 \subsection{Sector-wise CDS Return Statistics}
 
-\begin{table}[H]
+\begin{table}
     \centering
     \caption{Summary Statistics of Monthly CDS Returns by Sector}
-    \label{tab:cds_summary}
-    \input{../_output/latex_cds_by_sector_stats.tex}  % Dynamically insert the table file
+    \label{table:latex_cds_by_sector_stats}
+    
+    % Insert the external table file
+    \input{../_output/latex_cds_by_sector_stats.tex}
+
+    % Additional explanation as a footnote instead of another caption
+    \caption*{
+        This table presents descriptive statistics (mean, standard deviation, min, max, and quartiles) 
+        for CDS returns across different industry sectors. The variation in return volatility highlights sectoral differences, 
+        with financials and consumer services exhibiting larger fluctuations than government and healthcare.
+    }
 \end{table}
-\caption{\label{tab:sector_cds_stats} Summary Statistics of Monthly CDS Returns by Sector. 
-This table presents descriptive statistics (mean, standard deviation, min, max, and quartiles) 
-for CDS returns across different industry sectors. The variation in return volatility highlights sectoral differences, 
-with financials and consumer services exhibiting larger fluctuations than government and healthcare.}
-\end{table}
+
+
 
 \subsection{Monthly CDS Returns Over Time}
 \begin{figure}[h]
