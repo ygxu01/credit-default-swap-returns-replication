@@ -7528,8 +7528,55 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Project-Overview">Project Overview<a class="anchor-link" href="#Project-Overview">¶</a></h2><p>This project aims to <strong>replicate the Credit Default Swap (CDS) columns</strong> from the dataset used in <strong>He, Kelly, and Manela (2017)</strong>, following the methodology described in <strong>Palhares (2013)</strong>.<br/>
+The goal is to construct and validate CDS returns using WRDS data (Markit, Compustat, CRSP) and perform analysis on both historical and updated CDS return series.</p>
+<h3 id="Key-Steps">Key Steps<a class="anchor-link" href="#Key-Steps">¶</a></h3><ol>
+<li><p><strong>Pull All Daily CDS Data</strong></p>
 <ul>
-<li><a href="./Final_Project.html">Final Project HTML</a></li>
+<li>We connect to WRDS, query the Markit CDS tables for each year, and fetch the 5‐year CDS spreads (bid, ask, par, or composite).</li>
+<li>We merge duplicate quotes on the same day by taking an average or using the composite mid.</li>
+</ul>
+</li>
+<li><p><strong>Compute a Daily Mid Spread</strong></p>
+<ul>
+<li>We unify bid/ask to a single “midspread” each trading day.</li>
+<li>Ensure spreads are consistently in basis points (bps) or decimals.</li>
+</ul>
+</li>
+<li><p><strong>Calculate Daily Short‐CDS Returns</strong></p>
+<ul>
+<li>For each ticker (or redcode) and each day, apply the formula:</li>
+</ul>
+</li>
+</ol>
+<p>$$
+CDS^{ret}_t = \frac{CDS_t}{250}+ \Delta CDS_t \times RD_t.
+$$</p>
+<p>$$
+RD_t = \frac{1}{4} \sum_{j=1}^{4M} e^{-\lambda j/4} - e^{-\left(\lambda + j\delta\right)/4},
+$$</p>
+<ol start="4">
+<li><strong>Aggregate Daily to Monthly</strong><ul>
+<li>We group each entity’s daily returns by calendar month and <strong>compound</strong>:
+$R = \prod (1 + r_{\text{daily}}) - 1$</li>
+<li>The result is a single monthly short‐CDS return for each name.</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li><a href="./Final_Project.html">Project Walk Through</a></li>
+<li><a href="./latex_report.html">Project Report</a></li>
+<li><a href="./sum_stats.html">Summary Statistics</a></li>
 </ul>
 </div>
 </div>
