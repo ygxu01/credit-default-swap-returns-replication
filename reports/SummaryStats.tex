@@ -1,92 +1,85 @@
 \documentclass{article}
-%\usepackage[english]{babel}
-\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 % Ensure necessary packages are included
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 \usepackage{amsmath}
 \usepackage{graphicx}
-\usepackage{booktabs}  % Added for tabular rules
+\usepackage{booktabs}  % For professional-looking tables
 \usepackage{hyperref}
 \usepackage{caption}
-\usepackage{float}  % Required for [H] to work with tables and figures
+\usepackage{float}  % For forcing figure/table placement
+\usepackage{subcaption} % For multiple figures
 
 \title{Project 8: Summary Statistics of CDS Portfolios}
 \author{Sania Zeb \& Yangge Xu}
 
 \begin{document}
+
 \maketitle
 
 \begin{abstract}
-This file aims to include figures and tables that introduce and summarize the 
-data used to construct the CDS portfolios in this project.
+This document presents figures and tables summarizing the data used in constructing the CDS portfolios. In our dataset, we identified a "sector" variable within Markit data that warrants investigation. 
 
-While processing the data, we found a "sector" variable in Markit data worth investigating.
-We include a figure and a table that show the distribution of CDS contracts across different sectors. 
-This will help us understand the sectoral composition of our dataset and its potential impact on portfolio construction and return calculation.
+This analysis provides a sectoral breakdown of CDS contracts, highlighting sector-specific trends and return distributions. These insights are valuable for understanding credit risk variations across industries and their impact on portfolio construction.
 \end{abstract}
 
 \section{Statistics of CDS Contracts Across Sectors}
 
 \subsection{Sectoral Analysis of CDS Returns}
 
-Table below presents the summary statistics of monthly CDS returns across different industry sectors, offering valuable insights into the variation in return characteristics. The table includes key descriptive statistics such as mean, standard deviation, minimum, maximum, and quartiles for each sector.
+The table below presents the summary statistics of monthly CDS returns across different industry sectors. It includes key descriptive statistics such as mean, standard deviation, minimum, maximum, and quartiles.
 
 \paragraph{Key Findings:}
+\begin{itemize}
+    \item \textbf{Financial Sector:} This sector exhibits the highest return volatility, reflecting its exposure to systemic risk.
+    \item \textbf{Consumer Services:} Significant fluctuations, potentially driven by macroeconomic cycles.
+    \item \textbf{Government and Healthcare:} These sectors demonstrate lower volatility, indicating relative stability in credit markets.
+    \item \textbf{Mean Returns:} The average returns vary across industries, with some sectors displaying consistently negative returns, potentially indicating persistent credit risk concerns.
+\end{itemize}
 
 \subsection{Monthly CDS Returns Over Time}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../_output/monthly_returns_over_time.png}  % Adjusted path
-    \caption{\label{fig:monthly_cds_returns} Monthly CDS Portfolio Returns Over Time. 
-This figure illustrates the trend of average monthly CDS returns. 
-Fluctuations highlight financial stress and stability periods, providing insight into the risk and performance of credit default swaps.}
+    \caption{Monthly CDS Portfolio Returns Over Time. }
+    \includegraphics[width=0.8\textwidth]{../_output/monthly_returns_over_time.png}  
+    \caption*{
+    This figure illustrates the trend of average monthly CDS returns, highlighting fluctuations that align with financial stress periods and stability phases.}
+    \label{fig:monthly_cds_returns}
 \end{figure}
 
-\subsection{Analysis of Monthly CDS Portfolio Returns Over Time}
-
-Figure above presents the time series of monthly Credit Default Swap (CDS) portfolio returns, offering a comprehensive view of return fluctuations over the period under study. The x-axis represents time in the \textit{YYYY-MM} format, while the y-axis indicates the average monthly return. Each data point corresponds to the monthly average return of the CDS portfolios, with error bars reflecting the variance within the portfolios.
-
-\paragraph{Key Observations:}
+\paragraph{Observations:}
 \begin{itemize}
-    \item \textbf{Overall Trend:} The CDS returns exhibit a generally stable pattern with intermittent fluctuations. Most returns hover close to zero, indicating that while CDS portfolios experience variation, they are not subject to extreme long-term trends.
-    \item \textbf{Periods of High Volatility:} Significant negative return spikes are observed at various intervals, particularly during financial stress periods. These sudden drops likely correspond to market-wide disruptions, reflecting heightened credit risk.
-    \item \textbf{Post-Crisis Stability:} Post-2010, returns appear to stabilize, with fewer extreme negative values, suggesting reduced systemic risk in the CDS market or improved credit conditions over time.
-    \item \textbf{Effect of Financial Crises:} The observed dips in CDS returns align with key economic downturns, highlighting the role of macroeconomic factors in driving credit risk pricing.
+    \item \textbf{Overall Trend:} CDS returns remain close to zero, indicating limited long-term directional bias.
+    \item \textbf{Periods of High Volatility:} Market-wide disruptions, such as financial crises, are reflected in sharp return deviations.
+    \item \textbf{Post-2010 Stability:} A reduction in extreme negative returns suggests improving credit conditions.
+    \item \textbf{Macroeconomic Impact:} Notable dips align with economic downturns, reinforcing the link between CDS returns and systemic risk.
 \end{itemize}
 
-Understanding these return fluctuations is crucial for market participants who rely on CDS contracts for risk management and speculative purposes. The presence of negative return spikes suggests that during periods of financial distress, CDS portfolios experience significant mark-to-market losses, underscoring the importance of hedging strategies.
+\subsection{Distribution of CDS Returns by Sector}
 
-Moving to the summary Stats: \\
+To further investigate sector-specific risk variations, we present the boxplot of monthly CDS returns by sector. This visualization provides insights into the spread, median, and presence of extreme values.
 
-\begin{itemize}
-    \item \textbf{Sector-Specific Differences:} The table highlights distinct sectoral trends, with sectors such as financials and consumer services exhibiting higher return volatility compared to government and healthcare sectors.
-    \item \textbf{Mean Returns:} The average returns vary across industries, with certain sectors displaying consistently negative mean returns, potentially indicating persistent credit risk concerns.
-    \item \textbf{Return Volatility:} The standard deviation column suggests that some sectors experience more pronounced fluctuations, which could be attributed to industry-specific risk factors.
-    \item \textbf{Extremes in Returns:} The minimum and maximum values provide insight into the most severe losses and gains, reflecting periods of financial turbulence or recovery.
-\end{itemize}
-
-\paragraph{Sector-Specific Observations:}
-\begin{itemize}
-    \item \textbf{Financial Sector:} This sector tends to exhibit the highest return volatility, likely due to the inherent risk exposure in banking and capital markets.
-    \item \textbf{Consumer Services:} Shows significant fluctuations, potentially driven by economic cycles and consumer demand variations.
-    \item \textbf{Government and Healthcare:} These sectors generally demonstrate lower volatility, as they are less susceptible to credit risk shocks compared to cyclical industries.
-\end{itemize}
-
-The findings suggest that CDS returns are not uniform across sectors. Investors and risk managers should consider sector-specific characteristics when constructing CDS portfolios, as sectors with higher volatility may require more active risk management.
+\begin{figure}[H]
+    \centering
+    \caption{Distribution of Monthly CDS Returns by Sector. }
+    \includegraphics[width=0.8\textwidth]{../_output/boxplot_cds_returns_by_sector.png}
+    \caption*{
+    The boxplot highlights return distributions across sectors, with financials exhibiting higher variance, while government and healthcare sectors demonstrate relative stability.}
+    \label{fig:boxplot_cds_returns}
+\end{figure}
 
 \subsection{Sector-wise CDS Return Statistics}
 
-\begin{table}
-    \caption{Summary Statistics of Monthly CDS Returns by Sector. }
+\begin{table}[H]
     \centering
+    \caption{Summary Statistics of Monthly CDS Returns by Sector}
     \input{../_output/latex_cds_by_sector_stats.tex}
     \caption*{
         This table presents descriptive statistics (mean, standard deviation, min, max, and quartiles) 
-        for CDS returns across different industry sectors. The variation in return volatility highlights sectoral differences, 
-        with financials and consumer services exhibiting larger fluctuations than government and healthcare.
-    }
-    \label{table:latex_cds_by_sector_stats.tex}
-    \end{table}
-
+        for CDS returns across different industry sectors. It highlights sectoral differences in credit risk, 
+        with financials and consumer services experiencing greater return variability compared to government and healthcare.}
+    \label{table:latex_cds_by_sector_stats}
+\end{table}
 
 \end{document}
