@@ -75,10 +75,6 @@ def task_pull_markit():
         "clean": [],
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e38e643 (Updates)
 def task_pull_rf_data():
     """Gather and process risk-free rate data for calculations."""
     return {
@@ -114,7 +110,6 @@ def task_create_portfolio():
         "clean": True,
     }
 
-<<<<<<< HEAD
 def task_summary_stats():
     """Generate summary statistics files for the CDS portfolios."""
     return {
@@ -129,21 +124,22 @@ def task_summary_stats():
         "clean": True,
     }
 
-def task_generate_latex_files():
-    pass
-=======
-def task_actual_cds():
-    """create portfolio by running pull_cds_return_data.py"""
-    return {
-        "actions": ["python src/pull_cds_return_data.py"],  # Change to run pull_cds_return_data.py
-        "file_dep": [
-            "src/pull_cds_return_data.py",  # Add dependencies
-            "src/misc_tools.py",  # Ensure any necessary dependencies are included
-        ],
-        "targets": [DATA_DIR / "actual_cds_return.parquet"],  # Adjust target file to reflect the output
-        "clean": True,  # Ensure the task is cleaned up after execution
-    }
+import os
 
+def task_actual_cds_data():
+    """create portfolio by running pull_cds_return_data.py"""
+    # Ensure the target directory exists
+    os.makedirs(DATA_DIR, exist_ok=True)
+
+    return {
+        "actions": ["python src/pull_cds_return_data.py"],  # Run pull_cds_return_data.py
+        "file_dep": [
+            "src/pull_cds_return_data.py",  # Dependencies
+            "src/misc_tools.py",  # Necessary dependency
+        ],
+        "targets": [DATA_DIR / "actual_cds_return.parquet"],  # Output file
+        "clean": True,  # Clean after execution
+    }
 
 def task_generate_latex_outputs():
     """Generate tables and plots for LaTeX reports."""
@@ -163,7 +159,7 @@ def task_generate_latex_outputs():
         "clean": True,
     }
 
->>>>>>> e38e643 (Updates)
+
 
 
 # ==================================================
@@ -256,7 +252,6 @@ def task_compile_latex_docs():
     file_dep = [
         "./reports/Final_Project.tex",
         "./src/summary_stats.py",
-        #"./src/example_table.py"
     ]
 
     targets = [
@@ -266,15 +261,10 @@ def task_compile_latex_docs():
 
     return {
         "actions": [
-<<<<<<< HEAD
             "latexmk -xelatex -halt-on-error -cd ./reports/Final_Project.tex",  # Stop after 2 min
-            "latexmk -xelatex -halt-on-error -c -cd ./reports/Final_Project.tex"  # Clean after 2 min
+            "latexmk -xelatex -halt-on-error -c -cd ./reports/Final_Project.tex",  # Clean after 2 min
             "latexmk -xelatex -halt-on-error -cd ./reports/SummaryStats.tex",  # Compile
             "latexmk -xelatex -halt-on-error -c -cd ./reports/SummaryStats.tex",  # Clean
-=======
-            "latexmk -xelatex -halt-on-error -cd ./reports/Final_Project.tex",  
-            "latexmk -xelatex -halt-on-error -c -cd ./reports/Final_Project.tex" 
->>>>>>> e38e643 (Updates)
         ],
         "file_dep": file_dep,
         "targets": targets,
