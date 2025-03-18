@@ -99,16 +99,21 @@ def task_calc_cds_daily_return():
     }
 
 def task_create_portfolio():
-    """create portfolio"""
-    return{
-        "actions": ["python src/calc_cds_daily_return.py"],
+    """Create the CDS portfolio and save it as a Parquet file."""
+
+    return {
+        "actions": [
+            "python src/create_portfolio.py"
+        ],
         "file_dep": [
+            "src/create_portfolio.py",
             "src/calc_cds_daily_return.py",
             "src/misc_tools.py",
         ],
-        "targets": [DATA_DIR / "portfolio_return.parquet"],
+        "targets": ["_data/portfolio_return.parquet"], 
         "clean": True,
     }
+
 
 def task_summary_stats():
     """Generate summary statistics files for the CDS portfolios."""
@@ -266,11 +271,12 @@ def task_compile_latex_docs():
 
     file_dep = [
         "./reports/Final_Project.tex",
+        "./reports/SummaryStats.tex", 
         "./src/summary_stats.py",
     ]
 
     targets = [
-        "./reports/Final_Project.pdf"
+        "./reports/Final_Project.pdf",
         "./reports/SummaryStats.pdf",
     ]
 

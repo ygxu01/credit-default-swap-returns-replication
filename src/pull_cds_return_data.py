@@ -1,3 +1,8 @@
+"""
+This file pull the original cds data by authors He_Kelly_Manela collected from the publically available data
+and stoe locally for further comparisons and analysis.
+"""
+
 import pandas as pd
 from pandas.tseries.offsets import MonthEnd
 from pathlib import Path
