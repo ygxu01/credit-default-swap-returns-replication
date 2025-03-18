@@ -15,24 +15,6 @@ WRDS_USERNAME = config("WRDS_USERNAME")
 START_YEAR = config("START_YEAR")
 END_YEAR = config("END_YEAR")
 
-# Define a mapping for column name changes over different years
-COLUMN_MAPPING = {
-    "date": "trade_date",
-    "parspread": "spread",
-    # Add more mappings if needed based on pre/post-2009 differences
-}
-
-def check_column_exists(db, table, column):
-    """Check if a column exists in a WRDS table."""
-    query = f"SELECT column_name FROM information_schema.columns WHERE table_name = '{table}'"
-    columns = db.raw_sql(query)["column_name"].tolist()
-    return column in columns
-
-def safe_fetch_column(db, table, column):
-    """Fetch a column if it exists; otherwise, return None."""
-    if check_column_exists(db, table, column):
-        return f", {column}"
-    return ""
 
 def pull_markit_data(start_year=START_YEAR, end_year=END_YEAR, wrds_username=WRDS_USERNAME):
     """Fetch Markit CDS data from WRDS, ensuring column consistency across years."""
@@ -42,15 +24,11 @@ def pull_markit_data(start_year=START_YEAR, end_year=END_YEAR, wrds_username=WRD
     for year in range(int(start_year), int(end_year) + 1):
         print(f"Pulling Year {year}")
         table = f"markit.cds{year}"
-        
-        additional_columns = "".join([safe_fetch_column(db, table, col) for col in COLUMN_MAPPING.keys()])
-        
         query = f"""
         SELECT 
             ticker,
             date AS trade_date,
             AVG(parspread) AS spread
-            {additional_columns} 
         FROM {table}
         WHERE tenor = '5Y' 
         AND country = 'United States'
@@ -59,7 +37,6 @@ def pull_markit_data(start_year=START_YEAR, end_year=END_YEAR, wrds_username=WRD
         """
         
         new_df = db.raw_sql(query)
-        new_df.rename(columns=COLUMN_MAPPING, inplace=True)
         df_list.append(new_df)
     
     db.close()

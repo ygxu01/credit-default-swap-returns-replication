@@ -28,7 +28,7 @@ def test_cds_correlation():
     """
     he_table = load_real_cds_return()
     portfolio = load_portfolio()
-
+    
     portfolio_pivot = pivot_table(portfolio)
     portfolio_pivot = portfolio_pivot.reset_index()
     portfolio_pivot["yyyymm"] = portfolio_pivot["yyyymm"].apply(month_code_to_date)

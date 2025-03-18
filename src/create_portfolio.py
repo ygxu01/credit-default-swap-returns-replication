@@ -88,6 +88,8 @@ def load_portfolio(data_dir=DATA_DIR):
 if __name__ == "__main__":
     daily_return_df = load_cds_return()
 
+    daily_return_df = daily_return_df[daily_return_df["spread"] < 0.5]
+
     daily_return_df = create_yyyymm_col(daily_return_df)
 
     monthly_return_df = calc_cds_monthly_return(daily_return_df)
