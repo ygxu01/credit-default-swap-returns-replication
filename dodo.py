@@ -128,16 +128,6 @@ def task_create_portfolio():
         "clean": True,
     }
 
-def task_pull_cds_return_data():
-    """Pull the original CDS return data from the paper."""
-    return {
-        "actions": ["python src/pull_cds_return_data.py"],
-        "file_dep": ["src/pull_cds_return_data.py",
-                     MANUAL_DATA_DIR / "He_Kelly_Manela_Factors_And_Test_Assets_monthly.csv"],
-        "targets": [DATA_DIR / "actual_cds_return.parquet"],
-        "clean": True,
-    }
-
 
 # ==================================================
 # Task for Running Tests
@@ -223,20 +213,29 @@ def task_pull_cds_return_data():
 # Task for Compiling LaTeX Reports
 # ==================================================
 
-# def task_compile_summary():
-#     """Compile the final LaTeX report."""
-#     latex_file = "./reports/Research_Summary.tex"
-#     output_pdf = "./reports/Research_Summary.pdf"
+def task_compile_latex_docs():
+    """Compile the LaTeX documents to PDFs with a timeout."""
 
-#     return {
-#         "actions": [
-#             f"latexmk -xelatex -cd -jobname=Research_Summary {latex_file}",
-#             f"latexmk -c -cd {latex_file}",
-#         ],
-#         "file_dep": [latex_file],
-#         "targets": [output_pdf],
-#         "clean": True,
-#     }
+    file_dep = [
+        "./reports/Final_Project.tex",
+        #"./src/example_plot.py",
+        #"./src/example_table.py"
+    ]
+
+    targets = [
+        "./reports/Final_Project.pdf"
+    ]
+
+    return {
+        "actions": [
+            "latexmk -xelatex -halt-on-error -cd ./reports/Final_Project.tex",  # Stop after 2 min
+            "latexmk -xelatex -halt-on-error -c -cd ./reports/Final_Project.tex"  # Clean after 2 min
+        ],
+        "file_dep": file_dep,
+        "targets": targets,
+        "clean": True
+    }
+
 
 # ==================================================
 # PyDoit Configuration
