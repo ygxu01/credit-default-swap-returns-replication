@@ -1,6 +1,26 @@
 """
-Functions to pull and calculate the CDS midprice from the WRDS database.
+This script fetches and processes CDS (Credit Default Swap) data from WRDS for the United States.
+
+Functions:
+1. `pull_markit_data(start_year, end_year, wrds_username)`:
+   Fetches 5-year tenor CDS spread data for a given year range, averaging by ticker and trade date.
+
+2. `pull_markit_sector(start_year, end_year, wrds_username)`:
+   Retrieves unique sector-ticker combinations for 5-year tenor CDS contracts.
+
+3. `load_markit_data(data_dir)`:
+   Loads pre-saved CDS data from Parquet files.
+
+4. `load_sector_data(data_dir)`:
+   Loads the sector-ticker link table from Parquet files.
+
+5. `load_multiple_data(data_dir)`:
+   Loads and combines CDS data from multiple years into one dataframe.
+
+Main Process:
+- The script pulls and saves CDS data and sector-ticker link tables for each year in the specified range as Parquet files.
 """
+
 from datetime import datetime
 from pathlib import Path
 

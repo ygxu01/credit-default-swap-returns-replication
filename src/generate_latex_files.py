@@ -1,21 +1,18 @@
 r"""
-You can test out the latex code in the following minimal working
-example document:
+This script processes CDS return data, generates LaTeX tables, and creates plots for CDS portfolio analysis.
 
-\documentclass{article}
-\usepackage{booktabs}
-\begin{document}
-First document. This is a simple example, with no 
-extra parameters or packages included.
+### Steps:
+1. Table 1: LaTeX table of replicated CDS portfolios.
+2. Table 2: LaTeX table of summary statistics for monthly CDS returns.
+3. Graph 1: Plot of all CDS portfolio returns over time.
+4. Graph 2: Compare specific CDS portfolio returns (e.g., "CDS_10") to actual CDS returns (2001-2012).
+5. Graph 3: Post-2012 CDS portfolio vs government bonds comparison.
+6. Graph 4: Rolling window correlations of CDS returns (future work).
 
-\begin{table}
-\centering
-YOUR LATEX TABLE CODE HERE
-%\input{example_table.tex}
-\end{table}
-\end{document}
-
+### Outputs:
+- LaTeX tables and PNG plots for CDS portfolio returns and comparisons.
 """
+
 import pandas as pd
 import numpy as np
 
@@ -39,7 +36,7 @@ float_format_func = lambda x: '{:.5f}'.format(x)
 
 ### Table 1: Replicated CDS portfolios Snapshot
 df = load_portfolio()
-df = pivot_table(df)[1:]
+df = pivot_table(df).iloc[1:]
 df_subset = df.iloc[:5, :10]
 df_subset.index = df_subset.index.astype(int)
 

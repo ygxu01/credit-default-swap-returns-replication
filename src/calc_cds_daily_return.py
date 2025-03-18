@@ -1,7 +1,12 @@
 """
-Functions for processing CDS and risk-free rate data, including interpolation, 
-calculating risk-free rates, default probabilities, and CDS daily returns.
+This script processes CDS and risk-free rate data to compute daily CDS returns and default probabilities. It merges Federal Reserve and FRED risk-free rate data with Markit CDS data, applies cubic spline interpolation to yield curves, and calculates risk-free rates and discount factors. The script then computes default probabilities (RD) using CDS spreads and risk-free rates, and finally calculates daily CDS returns based on spread changes and RD. The results are saved in a Parquet file for further use.
+
+Functions include:
+- Merging risk-free rate data with CDS data
+- Interpolating yield curves for multiple maturities
+- Calculating default intensities, default probabilities, and CDS daily returns
 """
+
 
 import numpy as np
 import pandas as pd

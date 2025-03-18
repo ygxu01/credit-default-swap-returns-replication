@@ -1,6 +1,12 @@
 """
-Test suite utility functions.
+Test suite for utility functions to ensure correct functionality of date conversions and data retrieval:
+1. `test_generate_month_code`: Verifies the correct conversion of a date to a YYYYMM format.
+2. `test_month_code_to_date`: Ensures proper conversion from YYYYMM to a `datetime.date` object.
+3. `test_pull_from_wrds`: Confirms that data retrieval from WRDS returns a pandas DataFrame.
+
+These tests help ensure the correctness and reliability of date-related transformations and data retrieval logic.
 """
+
 
 import pandas as pd
 import datetime
