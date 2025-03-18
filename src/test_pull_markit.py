@@ -1,3 +1,13 @@
+"""
+Test suite for the `pull_markit` module to validate correct data fetching and structure:
+
+1. `test_pull_markit_data`: Ensures that the `pull_markit_data` function pulls the correct Markit data, returns a pandas DataFrame, and contains the expected columns. This test does not check the correctness of data content but ensures the function runs without errors and returns the expected format.
+2. `test_pull_market_sector`: Verifies that the `pull_markit_sector` function retrieves sector data correctly, returns a pandas DataFrame with the expected columns, and matches known characteristics like the number of unique sectors and the total rows in the dataset. It also tests the `load_sector_data` function for data completeness.
+
+These tests are important for confirming the correct functionality of data retrieval functions and ensuring that the resulting data is structured as expected, reducing the risk of errors downstream in the analysis pipeline.
+"""
+
+
 import pandas as pd
 from pathlib import Path
 from settings import config

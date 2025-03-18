@@ -1,3 +1,6 @@
+"""Test suite for validating functions related to portfolio creation, including month assignment, 
+monthly return computation, portfolio construction, and reshaping data into wide format."""
+
 import pandas as pd
 from pathlib import Path
 

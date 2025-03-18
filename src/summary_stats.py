@@ -1,3 +1,18 @@
+"""
+This script processes CDS return data, calculates monthly returns, and generates summary statistics and visualizations.
+
+### Steps:
+1. Load CDS return and sector data, merge them.
+2. Calculate monthly CDS returns.
+3. Generate summary statistics by sector and save as a LaTeX table.
+4. Plot monthly returns over time and save as a PNG.
+
+### Outputs:
+- LaTeX table (`latex_cds_by_sector_stats.tex`)
+- PNG plot of monthly returns (`monthly_returns_over_time.png`)
+"""
+
+
 import pandas as pd
 import numpy as np
 

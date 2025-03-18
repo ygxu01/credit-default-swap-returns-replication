@@ -1,3 +1,6 @@
+"""Test suite for calculating risk-free rates, lambda parameter, CDS daily returns,
+ and risk-free term based on input data using spline interpolation and financial formulas."""
+
 import pandas as pd
 import numpy as np
 from pandas.testing import assert_frame_equal

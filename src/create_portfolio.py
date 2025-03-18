@@ -1,3 +1,16 @@
+"""
+This script processes daily CDS returns and constructs monthly CDS portfolio returns. It aggregates daily returns into monthly compounded returns, filters tickers with insufficient data, and constructs portfolios based on CDS spreads. The portfolios are sorted into 20 groups and their returns are computed, with the results saved in a Parquet file for further analysis.
+
+Functions include:
+- `create_yyyymm_col`: Adds a column for the month and year (yyyymm) based on the trade date.
+- `calc_cds_monthly_return`: Computes the compounded monthly return from daily returns.
+- `filter_tickers_by_min_months`: Filters out tickers with fewer than a specified number of months of data.
+- `construct_cds_portfolios`: Constructs portfolios sorted by the first trading day's CDS spread and computes portfolio returns.
+- `pivot_table`: Pivots the portfolio data for easier analysis.
+- `load_portfolio`: Loads precomputed portfolio returns from a Parquet file.
+"""
+
+
 from pathlib import Path
 
 import numpy as np
@@ -15,7 +28,7 @@ from misc_tools import generate_month_code
     
 
 def create_yyyymm_col(daily_rd_df):
-    daily_rd_df["yyyymm"] = daily_rd_df["trade_date"].apply(generate_month_code)
+    daily_rd_df.loc[:, "yyyymm"] = daily_rd_df["trade_date"].apply(generate_month_code)
     return daily_rd_df
 
 

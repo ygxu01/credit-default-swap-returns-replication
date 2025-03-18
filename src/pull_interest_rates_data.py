@@ -1,6 +1,23 @@
 """
-This file aims to define functions to clean and merge data releated to risk-free rate construction.
+This file defines functions for cleaning and merging data related to the construction of risk-free rates.
+
+Functions:
+1. `pull_fed_yield_curve(start_year)`:
+   Downloads and processes the latest Federal Reserve yield curve data, filtered by a specified start year.
+
+2. `pull_swap_rates(start_year)`:
+   Downloads and processes 3-month and 6-month swap rate data from FRED, merges them, and filters by the start year.
+
+3. `load_fed_yield_curve(data_dir)`:
+   Loads pre-saved Federal Reserve yield curve data from a Parquet file.
+
+4. `load_fred_data(data_dir)`:
+   Loads pre-saved swap rate data from a Parquet file.
+
+Main Process:
+- The script fetches and saves yield curve and swap rate data to Parquet files for further use.
 """
+
 
 import pandas as pd
 import requests
