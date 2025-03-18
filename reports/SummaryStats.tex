@@ -76,18 +76,17 @@ The findings suggest that CDS returns are not uniform across sectors. Investors 
 
 \subsection{Sector-wise CDS Return Statistics}
 
-\begin{table}[H]
+\begin{table}
+    \caption{Summary Statistics of Monthly CDS Returns by Sector. }
     \centering
-    \resizebox{\textwidth}{!}{ % Resize table to fit page
-        \begin{tabular}{c c c c c c c} % Adjust column count based on data
-            \input{../_output/latex_cds_by_sector_stats.tex} 
-        \end{tabular}
+    \input{../_output/latex_cds_by_sector_stats.tex}
+    \caption*{
+        This table presents descriptive statistics (mean, standard deviation, min, max, and quartiles) 
+        for CDS returns across different industry sectors. The variation in return volatility highlights sectoral differences, 
+        with financials and consumer services exhibiting larger fluctuations than government and healthcare.
     }
-    \caption{Summary Statistics of Monthly CDS Returns by Sector. 
-    This table presents descriptive statistics (mean, standard deviation, min, max, and quartiles) 
-    for CDS returns across different industry sectors. The variation in return volatility highlights sectoral differences, 
-    with financials and consumer services exhibiting larger fluctuations than government and healthcare.}
-    \label{tab:cds_summary}
-\end{table}
+    \label{table:latex_cds_by_sector_stats.tex}
+    \end{table}
+
 
 \end{document}
