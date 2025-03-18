@@ -255,7 +255,7 @@ def task_run_notebooks():
                 ),
                 copy_file(
                     OUTPUT_DIR / f"{notebook_name}.html",
-                    Path("docs_src") / f"{notebook_name}.html",
+                    Path("./docs") / f"{notebook_name}.html",
                     mkdir=True,
                 ),
                 jupyter_clear_output(notebook_name),
